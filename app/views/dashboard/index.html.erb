@@ -1,0 +1,9 @@
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+    <%= render partial: 'dashboard/shared/sidebar' %>
+    <div id="content-wrapper">
+      <div class="page-content">
+        <%= render partial: 'dashboard/shared/header' %>
+        <div ui-view="dashboardContent"></div>
+      </div>
+    </div>
+</div>

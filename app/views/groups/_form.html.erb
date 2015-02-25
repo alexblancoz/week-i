@@ -1,0 +1,24 @@
+<div class=row>
+  <div class=col-lg-6>
+    <rd-widget>
+      <rd-widget-header icon="fa-floppy-o" title="Grupos"><a href="#/dashboard/groups/list">Atr&aacute;s</a></rd-widget-header>
+      <form role="form" ng-submit="save(group)">
+        <rd-widget-body classes="no-padding">
+          <div class="panel-body">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre del grupo" ng-model="group.name">
+
+              <div class="errors" ng-show="errors.name">
+                <p class="error" ng-repeat="error in errors.name">{{error}}</p>
+              </div>
+            </div>
+          </div>
+        </rd-widget-body>
+        <rd-widget-footer>
+          <button type="submit" class="btn btn-default">Guardar</button>
+        </rd-widget-footer>
+      </form>
+    </rd-widget>
+  </div>
+</div>

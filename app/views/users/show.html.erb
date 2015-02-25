@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Last names:</strong>
+  <%= @user.last_names %>
+</p>
+
+<p>
+  <strong>Enrollment:</strong>
+  <%= @user.enrollment %>
+</p>
+
+<p>
+  <strong>Major:</strong>
+  <%= @user.major %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @user.semester %>
+</p>
+
+<p>
+  <strong>Hashed password:</strong>
+  <%= @user.hashed_password %>
+</p>
+
+<p>
+  <strong>Identity:</strong>
+  <%= @user.identity %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

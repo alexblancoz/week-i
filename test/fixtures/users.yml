@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  last_names: MyString
+  enrollment: MyString
+  major: 1
+  semester: 1
+  hashed_password: MyString
+  identity: 1
+
+two:
+  name: MyString
+  last_names: MyString
+  enrollment: MyString
+  major: 1
+  semester: 1
+  hashed_password: MyString
+  identity: 1

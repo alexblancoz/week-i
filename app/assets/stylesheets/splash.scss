@@ -1,0 +1,96 @@
+.background {
+  background-image: url(http://habrastorage.org/files/c9c/191/f22/c9c191f226c643eabcce6debfe76049d.jpg);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  .form-container {
+    text-align: center;
+    width: 30rem;
+    border-radius: 0.5rem;
+    margin: 4rem auto;
+    background-color: #fff;
+    padding: 2rem;
+  }
+
+  .login {
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    transform: translateY(-50%);
+  }
+
+  .register {
+  }
+
+  .container .glyphicon-image {
+    font-size: 10rem;
+    margin-top: 3rem;
+    color: #f96145;
+  }
+
+  input, select {
+    width: 100%;
+    margin-top: 1.4rem;
+    padding: 1rem;
+    background-color: #ecf2f4;
+    border-radius: 0.2rem;
+    border: none;
+  }
+
+  button[type="submit"] {
+    margin-top: 1.4rem;
+  }
+
+  .login-title {
+    margin-bottom: 3rem;
+    font-weight: bold;
+    color: #ababab;
+    font-size: 2em;
+  }
+
+  .btn {
+    border-radius: 0.2rem;
+  }
+
+  .btn .glyphicon {
+    font-size: 3rem;
+    color: #fff;
+  }
+
+  .full-width {
+    background-color: #8eb5e2;
+    width: 100%;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .box {
+    margin-bottom: 3rem;
+  }
+
+  a {
+    &:hover {
+      color: #d43f3a;
+    }
+    margin-top: 10px;
+    color: #555;
+  }
+
+  .errors {
+    background-color: #FF423C;
+    .error {
+      padding: 5px;
+      margin: 0px;
+      font-size: 0.7em;
+      color: #FFF;
+    }
+  }
+}

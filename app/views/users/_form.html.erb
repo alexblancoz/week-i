@@ -1,0 +1,51 @@
+<div class="jumbotron form-container register">
+  <a href="/#/splash/login">Atr&aacute;s</a>
+  <div class="container">
+    <span class="glyphicon glyphicon-user glyphicon-image"></span>
+    <h2 class="login-title">Espacios de Innovaci&oacute;n</h2>
+    <form ng-submit="register(user)" class="box">
+      <input type="text" placeholder="Nombre" ng-model="user.name">
+      <div class="errors" ng-show="errors.name">
+        <p class="error" ng-repeat="error in errors.name">{{error}}</p>
+      </div>
+
+      <input type="text" placeholder="Apellidos" ng-model="user.last_names">
+      <div class="errors" ng-show="errors.last_names">
+        <p class="error" ng-repeat="error in errors.last_names">{{error}}</p>
+      </div>
+
+      <input type="text" placeholder="Matricula" ng-model="user.enrollment">
+      <div class="errors" ng-show="errors.enrollment">
+        <p class="error" ng-repeat="error in errors.enrollment">{{error}}</p>
+      </div>
+
+        <select ng-model="user.major">
+          <option ng-repeat="major in majors" value="{{major.key}}">
+            {{major.name}}
+          </option>
+        </select>
+
+
+      <div class="errors" ng-show="errors.major">
+        <p class="error" ng-repeat="error in errors.major">{{error}}</p>
+      </div>
+
+      <input type="number" placeholder="Semestre" ng-model="user.semester">
+      <div class="errors" ng-show="errors.semester">
+        <p class="error" ng-repeat="error in errors.semester">{{error}}</p>
+      </div>
+
+      <input type="password" placeholder="Contrase&ntilde;a" ng-model="user.password">
+      <div class="errors" ng-show="errors.password">
+        <p class="error" ng-repeat="error in errors.password">{{error}}</p>
+      </div>
+
+      <input type="password" placeholder="Confirmaci&oacute;n de contrase&ntilde;a" ng-model="user.password_confirmation">
+      <div class="errors" ng-show="errors.password_confirmation">
+        <p class="error" ng-repeat="error in errors.password_confirmation">{{error}}</p>
+      </div>
+
+      <button type="submit" class="btn btn-default full-width"><span class="glyphicon glyphicon-ok"></span></button>
+    </form>
+  </div>
+</div>

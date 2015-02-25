@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h3 class="modal-title">Selecciona un profesor</h3>
+</div>
+<div class="modal-body">
+  <div ng-show="professors.length >0">
+    <ul>
+      <li ng-repeat="professor in professors">
+        <a ng-click="selected = professor">{{ professor.name }} {{professor.last_names }}</a>
+      </li>
+    </ul>
+    Seleccionado: <b>{{ selected.name }} {{ selected.last_names }}</b>
+  </div>
+  <div ng-show="professors.length == 0">
+    No existen profesores registrados que den la materia.
+  </div>
+</div>
+<div class="modal-footer">
+  <span ng-show="professors.length > 0">
+    <button class="btn btn-primary" ng-click="ok()">Aceptar</button>
+  </span>
+  <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>

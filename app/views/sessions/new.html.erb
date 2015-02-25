@@ -1,0 +1,15 @@
+<div class="jumbotron form-container login">
+  <div class="container">
+    <span class="glyphicon glyphicon-list-alt glyphicon-image"></span>
+    <h2 class="login-title">Espacios de Innovaci&oacute;n</h2>
+    <form ng-submit="login(user)" class="box">
+      <div class="errors" ng-show="errors.message">
+        <p class="error">{{errors.message}}</p>
+      </div>
+      <input type="text" placeholder="Matricula" ng-model="user.enrollment">
+      <input type="password" placeholder="Contrase&ntilde;a" ng-model="user.password">
+      <button type="submit" class="btn btn-default full-width"><span class="glyphicon glyphicon-ok"></span></button>
+      <a class="footer" href="/#/splash/register">Registrarse</a>
+    </form>
+  </div>
+</div>
