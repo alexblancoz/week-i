@@ -219,16 +219,34 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                destroyProfessor: function (courseProfessorUserId) {
+                destroyProfessor: function (professorId, courseId) {
                     return this.post('destroy_professor.json', {
+                        data: {
+                            professor_id: professorId,
+                            course_id: courseId
+                        }
+                    });
+                },
+
+                addProfessor: function (professorId, courseId) {
+                    return this.post('add_professor.json', {
+                        data: {
+                            professor_id: professorId,
+                            course_id: courseId
+                        }
+                    });
+                },
+
+                destroyProfessorUser: function (courseProfessorUserId) {
+                    return this.post('destroy_professor_user.json', {
                         data: {
                             id: courseProfessorUserId
                         }
                     });
                 },
 
-                addProfessor: function (courseProfessorId) {
-                    return this.post('add_professor.json', {
+                addProfessorUser: function (courseProfessorId) {
+                    return this.post('add_professor_user.json', {
                         data: {
                             id: courseProfessorId
                         }

@@ -1,6 +1,7 @@
 class Api::V1::UsersController < Api::ApiController
 
-  before_action :assert_user, except: [:login, :create, :majors, :campuses]
+  before_action :assert_user, except: [:list, :login, :create, :majors, :campuses]
+  before_action :assert_administrator, only: [:list]
 
   def list
     @users = User.all 

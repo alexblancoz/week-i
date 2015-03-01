@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20150221224519) do
     t.datetime "updated_at",                  null: false
   end
 
-  add_foreign_key "course_professor_users", "users", name: "course_professor_users_course_professor_id_fk", column: "course_professor_id"
+  add_foreign_key "course_professor_users", "course_professors", name: "course_professor_users_course_professor_id_fk"
   add_foreign_key "course_professor_users", "users", name: "course_professor_users_user_id_fk"
 
   add_foreign_key "course_professors", "courses", name: "course_professors_course_id_fk"

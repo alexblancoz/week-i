@@ -22,4 +22,9 @@ class Course < ActiveRecord::Base
   scope :filter_by_user, ->(user_id){ where('course_professor_users.user_id = ?', user_id) }
   scope :filter_by_no_user, ->{ where('course_professor_users.id IS NULL') }
 
+  #methods
+  def professors
+    @professors ||= Professor.base.with_course_professors.filter_by_course(self.id)
+  end
+
 end

@@ -1,6 +1,6 @@
 class Api::V1::ScoresController < Api::ApiController
 
-  before_action :assert_user
+  before_action :assert_teacher
 
   # POST /api/scores/scored_groups.json
   def scored_groups

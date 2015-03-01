@@ -14,8 +14,7 @@
             <tr ng-repeat="user in users" ng-click="show(user)">
               <td>{{user.name}}</td>
               <td>{{user.last_names}}</td>
-              <td>{{identities[user.identity].name}}</td>
-
+              <td>{{identities[user.identity]}}</td>
             </tr>
             </tbody>
           </table>

@@ -2,6 +2,7 @@ class Api::V1::ProfessorsController < Api::ApiController
 
   before_action :assert_user
   before_action :assert_professor, only: [:update, :destroy]
+  before_action :assert_administrator, only: [:create, :destroy]
 
   # POST /api/groups/list.json
   def list

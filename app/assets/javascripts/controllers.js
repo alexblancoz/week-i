@@ -376,10 +376,8 @@ angular.module('WeekI.controllers', [])
         };
 
         var loadCourses = function () {
-
             switch ($scope.user.identity) {
                 case User.Identities.administrator:
-
                     Course.list()
                         .success(function (data, status) {
                             $scope.courses = data;
@@ -387,7 +385,6 @@ angular.module('WeekI.controllers', [])
                         .error(handleError);
                     break;
                 case User.Identities.user:
-
                     Course.taken()
                         .success(function (data, status) {
                             $scope.courses_taken = data;
@@ -404,36 +401,39 @@ angular.module('WeekI.controllers', [])
             }
         };
 
-
         var handleError = function (data, status) {
             Error.handleError(data, status);
         };
 
         var addCourseProfessor = function (professor) {
-            Course.addProfessor(professor.course_professor_id)
+            Course.addProfessorUser(professor.course_professor_id)
                 .success(loadCourses)
                 .error(handleError);
         };
 
         $scope.addCourse = function (course) {
+            Course.professors(course.id)
+                .success(function (data, status) {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'course/modal',
+                        controller: 'CourseModalCtrl',
+                        resolve: {
+                            professors: function() {
+                                return data;
+                            }
+                        }
+                    });
 
-            var modalInstance = $modal.open({
-                templateUrl: 'course/modal',
-                controller: 'CourseModalCtrl',
-                resolve: {
-                    courseId: function () {
-                        return course.id;
-                    }
-                }
-            });
+                    modalInstance.result.then(function (selectedProfessor) {
+                        addCourseProfessor(selectedProfessor)
+                    });
 
-            modalInstance.result.then(function (selectedProfessor) {
-                addCourseProfessor(selectedProfessor)
-            });
+                })
+                .error(handleError);
         };
 
         $scope.destroyCourse = function (course) {
-            Course.destroyProfessor(course.course_professor_user_id)
+            Course.destroyProfessorUser(course.course_professor_user_id)
                 .success(loadCourses)
                 .error(handleError);
         };
@@ -446,16 +446,11 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('CourseModalCtrl', function ($scope, $modalInstance, courseId, Course, Error) {
+    .controller('CourseModalCtrl', function ($scope, $modalInstance, professors, Course, Error) {
 
         var initialize = function () {
-            Course.professors(courseId)
-                .success(function (data, status) {
-                    $scope.professors = data;
-                    $scope.selected = $scope.professors[0];
-                })
-                .error(handleError);
-
+            $scope.professors = professors;
+            $scope.selected = $scope.professors[0];
         };
 
         var handleError = function (data, status) {
@@ -473,9 +468,13 @@ angular.module('WeekI.controllers', [])
         initialize();
     })
 
-    .controller('CoursesShowCtrl', function ($scope, $stateParams, Course, Helper, Error) {
+    .controller('CoursesShowCtrl', function ($scope, $stateParams, $modal, Course, Helper, Error, Professor) {
 
         var initialize = function () {
+            loadCourse();
+        };
+
+        var loadCourse = function() {
             Course.show($stateParams.courseId)
                 .success(function (data, status) {
                     $scope.course = data;
@@ -485,6 +484,42 @@ angular.module('WeekI.controllers', [])
 
         var handleError = function (data, status) {
             Error.handleError(data, status);
+        };
+
+        var addProfessorSuccess = function(course, professors) {
+            var modalInstance = $modal.open({
+                templateUrl: 'course/modal',
+                controller: 'CourseModalCtrl',
+                resolve: {
+                    professors: function() {
+                        return professors;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedProfessor) {
+                addCourseProfessor(selectedProfessor, $scope.course)
+            });
+        };
+
+        var addCourseProfessor = function(professor, course) {
+            Course.addProfessor(professor.id, course.id)
+                .success(loadCourse)
+                .error(handleError);
+        };
+
+        $scope.addProfessor = function(course) {
+            Professor.list()
+                .success(function(data, status) {
+                    addProfessorSuccess(course, data);
+                })
+                .error(handleError);
+        };
+
+        $scope.destroyProfessor = function(professor, course) {
+            Course.destroyProfessor(professor.id, course.id)
+                .success(loadCourse)
+                .error(handleError);
         };
 
         initialize();
@@ -676,7 +711,7 @@ angular.module('WeekI.controllers', [])
 
             User.identities()
                 .success(function (data, status) {
-                    $scope.Identities = data;
+                    $scope.identities = data;
                 })
                 .error(handleError);
         };

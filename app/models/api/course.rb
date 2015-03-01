@@ -1,8 +1,8 @@
 class Api::Course < Course
 
   module Json
-    LIST = { only: [:id, :key, :name, :semester] }
-    SHOW = { only: [:id, :key, :name, :semester] }
+    LIST = { }
+    SHOW = { only: [:id, :key, :name, :semester], methods: [:professors] }
   end
 
 end

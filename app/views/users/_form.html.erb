@@ -26,8 +26,8 @@
       </div>
 
       <select ng-model="user.major">
-        <option ng-repeat="major in majors" value="{{major.key}}">
-          {{major.name}}
+        <option ng-repeat="major in majors" value="{{$index}}">
+          {{major}}
         </option>
       </select>
 
@@ -36,8 +36,8 @@
       </div>
 
       <select ng-model="user.campus">
-        <option ng-repeat="campus in campuses" value="{{campus.key}}">
-          {{campus.name}}
+        <option ng-repeat="campus in campuses" value="{{$index}}">
+          {{campus}}
         </option>
       </select>
 

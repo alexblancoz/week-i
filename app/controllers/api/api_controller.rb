@@ -14,6 +14,16 @@ class Api::ApiController < ApplicationController
     @user = Api::User.find_by_id(self.app_session.id)
   end
 
+  def assert_teacher
+    assert_user
+    ban_user if @user.identity != Api::User::Identity::TEACHER
+  end
+
+  def assert_administrator
+    assert_user
+    ban_user if @user.identity != Api::User::Identity::ADMINISTRATOR
+  end
+
   def ban_user
     render_error(:unauthorized, 'Tu cuenta ha sido baneada, contacta a un administrador.')
     @user.active = false

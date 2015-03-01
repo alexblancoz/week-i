@@ -108,6 +108,16 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
                 }
             })
 
+            .state('dashboard.courses.show', {
+                url: '/:courseId',
+                views: {
+                    '': {
+                        templateUrl: '/courses/show',
+                        controller: 'CoursesShowCtrl'
+                    }
+                }
+            })
+
             .state('dashboard.professors', {
                 abstract: true,
                 url: '/professors',

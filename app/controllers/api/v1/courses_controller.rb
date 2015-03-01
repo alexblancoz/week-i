@@ -24,7 +24,7 @@ class Api::V1::CoursesController < Api::ApiController
 
   # POST /api/courses/show.json
   def show
-    @course = Api::Course.base.base_users.with_users.filter_by_user(@user.id).first
+    @course = Api::Course.base.filter_by_id(params[:id]).first
     render json: @course.as_json(Api::Course::Json::SHOW)
   end
 
@@ -60,8 +60,8 @@ class Api::V1::CoursesController < Api::ApiController
     end
   end
 
-  # POST /api/courses/add_professor.json
-  def add_professor
+  # POST /api/courses/add_professor_user.json
+  def add_professor_user
     failed = false
     @course_professor = Api::CourseProfessor.base.filter_by_id(params[:id]).first
     if @course_professor.nil?
@@ -79,8 +79,8 @@ class Api::V1::CoursesController < Api::ApiController
     end
   end
 
-  # POST /api/courses/destroy_professor.json
-  def destroy_professor
+  # POST /api/courses/destroy_professor_user.json
+  def destroy_professor_user
     failed = false
     @course_professor_user = Api::CourseProfessorUser.base.filter_by_id(params[:id]).first
     if @course_professor_user.nil?
@@ -91,6 +91,34 @@ class Api::V1::CoursesController < Api::ApiController
         return
       end
       failed = !@course_professor_user.destroy
+    end
+    if failed
+      render_error(:expectation_failed, 'Hubo un error quitando la materia')
+    else
+      render json: @course_professor_user
+    end
+  end
+
+  # POST /api/courses/add_professor.json
+  def add_professor
+    @course_professor = Api::CourseProfessor.new
+    @course_professor.professor_id = params[:professor_id]
+    @course_professor.course_id = params[:course_id]
+    if @course_professor.save
+      render json: @course_professor.as_json(Api::CourseProfessor::Json::SHOW)
+    else
+      render_errors(:unprocessable_entity, @course_professor.errors);
+    end
+  end
+
+  # POST /api/courses/destroy_professor.json
+  def destroy_professor
+    failed = false
+    @course_professor = Api::CourseProfessor.base.filter_by_professor(params[:professor_id]).filter_by_course(params[:course_id]).first
+    if @course_professor.nil?
+      failed = true
+    else
+      failed = !@course_professor.destroy
     end
     if failed
       render_error(:expectation_failed, 'Hubo un error quitando la materia')

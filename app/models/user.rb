@@ -67,9 +67,14 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= LIST.map { |key, value| {key: key, name: value[:name]} }
+      @@object_values ||= ->{
+        hash = {}
+        LIST.each do |key, value|
+          hash[key] = value[:name]
+        end
+        hash
+      }.call
     end
-
   end
 
   module Major
@@ -89,7 +94,13 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= LIST.map { |key, value| {key: key, name: value[:name]} }
+      @@object_values ||= ->{
+        hash = {}
+        LIST.each do |key, value|
+          hash[key] = value[:name]
+        end
+        hash
+      }.call
     end
   end
 
@@ -114,7 +125,13 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= LIST.map { |key, value| {key: key, name: value[:name]} }
+      @@object_values ||= ->{
+        hash = {}
+        LIST.each do |key, value|
+          hash[key] = value[:name]
+        end
+        hash
+      }.call
     end
   end
 
