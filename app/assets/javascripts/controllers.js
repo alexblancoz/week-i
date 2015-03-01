@@ -348,20 +348,20 @@ angular.module('WeekI.controllers', [])
         initialize();
     })
 
-    .controller('CoursesCtrl', function ($scope, $state, $modal, Course, Error) {
+    .controller('CoursesCtrl', function ($scope, $state, $modal, Course, Error, User) {
 
         var initialize = function () {
             $scope.courses_taken = [];
             $scope.courses_not_taken = [];
             $scope.courses = [];
 
-            $scope.$on('user.loaded', function() {
-
-            });
-
-
-            loadCourses();
-
+            if ($scope.user){
+             loadCourses();   
+            } else {
+                $scope.$on('user.loaded', function() {
+                    loadCourses(); 
+                });
+            }                
         };
 
         var loadCourses = function() {
