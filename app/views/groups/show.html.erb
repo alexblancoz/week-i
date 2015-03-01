@@ -1,37 +1,41 @@
 <div class="col-lg-12">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-          <a class="btn btn-default navbar-btn" href="#/dashboard/groups/list">
-            Atr&aacute;s
-          </a>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <a class="btn btn-default navbar-btn" href="#/dashboard/groups/list">
+        Atr&aacute;s
+      </a>
 
-          <button class="btn btn-default navbar-btn pull-right" ng-click="requestMembership(group)">
-            {{request_membership_button}}
-          </button>
-        </div>
-    </nav>
+      <button class="btn btn-default navbar-btn pull-right" ng-click="requestMembership(group)" ng-if="user.identity == user_identities.user">
+        {{request_membership_button}}
+      </button>
+
+      <button class="btn btn-default navbar-btn pull-right" ng-click="score(group)" ng-if="user.identity == user_identities.teacher">
+        {{score_button}}
+      </button>
+    </div>
+  </nav>
 </div>
 
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-xs-12">
-      <rd-widget>
-        <rd-widget-body>
-          <div class="widget-icon red pull-left"><i class="fa fa-info-circle"></i></div>
-          <div class=title>{{group.name}}</div>
-          <div class=comment>Nombre del grupo</div>
-        </rd-widget-body>
-      </rd-widget>
-    </div>
+  <div class="col-lg-6 col-md-6 col-xs-12">
+    <rd-widget>
+      <rd-widget-body>
+        <div class="widget-icon red pull-left"><i class="fa fa-info-circle"></i></div>
+        <div class=title>{{group.name}}</div>
+        <div class=comment>Nombre del grupo</div>
+      </rd-widget-body>
+    </rd-widget>
+  </div>
 
-    <div class="col-lg-6 col-md-6 col-xs-12">
-      <rd-widget>
-        <rd-widget-body>
-          <div class="widget-icon blue pull-left"><i class="fa fa-user"></i></div>
-          <div class=title>{{group.user_name}}</div>
-          <div class=comment>Due&ntilde;o del grupo</div>
-        </rd-widget-body>
-      </rd-widget>
-    </div>
+  <div class="col-lg-6 col-md-6 col-xs-12">
+    <rd-widget>
+      <rd-widget-body>
+        <div class="widget-icon blue pull-left"><i class="fa fa-user"></i></div>
+        <div class=title>{{group.user_name}}</div>
+        <div class=comment>Due&ntilde;o del grupo</div>
+      </rd-widget-body>
+    </rd-widget>
+  </div>
 </div>
 
 <div class="row">

@@ -127,6 +127,8 @@ angular.module('WeekI.controllers', [])
                     $scope.user = data;
                 })
                 .error(handleError);
+
+            $scope.user_identities = User.identities;
         };
 
         var handleError = function (data, status) {
@@ -168,15 +170,14 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('GroupsCtrl', function ($scope, $state, Group, Error) {
+    .controller('GroupsCtrl', function ($scope, $state, Group, Error, User) {
 
         var initialize = function () {
             $scope.groups = [];
-            Group.list()
-                .success(function(data, status) {
-                    $scope.groups = data;
-                })
-                .error(handleError);
+            switch (user.identity) {
+                case User.identities.user:
+
+            }
         };
 
         var handleError = function (data, status) {

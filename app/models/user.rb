@@ -106,8 +106,7 @@ class User < ActiveRecord::Base
   end
 
   #associations
-  has_many :received_scores, class_name: 'Score', :foreign_key => :user_id
-  has_many :given_scores, class_name: 'Score', :foreign_key => :judge_id
+  has_many :scores
   has_many :course_professor_users
   has_many :group_users
 

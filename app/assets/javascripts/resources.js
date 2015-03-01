@@ -69,6 +69,12 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
                 campuses: function() {
                     return this.post('campuses.json');
+                },
+
+                identities: {
+                    administrator: 0,
+                    user: 1,
+                    teacher: 2
                 }
 
             });

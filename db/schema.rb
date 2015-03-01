@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150221224519) do
     t.float    "amount"
     t.string   "observations", limit: 512
     t.integer  "user_id"
-    t.integer  "judge_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

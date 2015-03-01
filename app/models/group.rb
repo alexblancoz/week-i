@@ -2,6 +2,7 @@ class Group < ActiveRecord::Base
 
   #associations
   has_many :group_users
+  has_many :scores
   
   #validations
   validates :name, length: { in: 2..100 }, presence: true
