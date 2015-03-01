@@ -65,7 +65,12 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
                 majors: function() {
                     return this.post('majors.json');
+                },
+
+                campuses: function() {
+                    return this.post('campuses.json');
                 }
+
             });
 
         return User;

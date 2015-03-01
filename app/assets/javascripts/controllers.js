@@ -79,6 +79,12 @@ angular.module('WeekI.controllers', [])
                     $scope.majors = data;
                 })
                 .error(handleError);
+
+            User.campuses()
+                .success(function(data, status) {
+                    $scope.campuses = data;
+                })
+                .error(handleError);
         };
 
         var registerSuccess = function (data, status) {
