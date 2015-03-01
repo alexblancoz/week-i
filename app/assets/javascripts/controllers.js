@@ -326,24 +326,46 @@ angular.module('WeekI.controllers', [])
         var initialize = function () {
             $scope.courses_taken = [];
             $scope.courses_not_taken = [];
+            $scope.courses = [];
+
+            $scope.$on('user.loaded', function() {
+
+            });
+
 
             loadCourses();
 
         };
 
         var loadCourses = function() {
-            Course.taken()
-                .success(function(data, status) {
-                    $scope.courses_taken = data;
-                })
-                .error(handleError);
 
-            Course.notTaken()
-                .success(function(data, status) {
-                    $scope.courses_not_taken = data;
-                })
-                .error(handleError);
+            switch ($scope.user.identity) {
+                case User.identities.administrator:
+
+                    Course.list()
+                        .success(function(data, status) {
+                            $scope.courses = data;
+                        })
+                        .error(handleError);
+                    break;
+                case User.identities.user:
+
+                    Course.taken()
+                        .success(function(data, status) {
+                            $scope.courses_taken = data;
+                        })
+                        .error(handleError);
+
+                    Course.notTaken()
+                        .success(function(data, status) {
+                            $scope.courses_not_taken = data;
+                        })
+                        .error(handleError);
+                default:
+                    break;
+            }
         };
+
 
         var handleError = function (data, status) {
             Error.handleError(data, status);
