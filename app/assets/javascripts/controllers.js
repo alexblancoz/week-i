@@ -31,20 +31,20 @@ angular.module('WeekI.controllers', [])
             msg: 'Found a bug? Create an issue with as many details as you can.'
         }];
 
-        $scope.addAlert = function() {
+        $scope.addAlert = function () {
             $scope.alerts.push({
                 msg: 'Another alert!'
             });
         };
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
     })
 
     .controller('LoginCtrl', function ($scope, $state, Session, User, Helper, Error) {
 
-        var initialize = function() {
+        var initialize = function () {
             $scope.errors = {};
         };
 
@@ -75,13 +75,13 @@ angular.module('WeekI.controllers', [])
         var initialize = function () {
             $scope.errors = {};
             User.majors()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.majors = data;
                 })
                 .error(handleError);
 
             User.campuses()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.campuses = data;
                 })
                 .error(handleError);
@@ -112,9 +112,9 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('DashboardCtrl', function($scope, $state, User, Storage, Error, Session) {
+    .controller('DashboardCtrl', function ($scope, $state, User, Storage, Error, Session) {
 
-        var initialize = function() {
+        var initialize = function () {
             $scope.items = [];
 
             $scope.dropdownItems = [
@@ -125,13 +125,13 @@ angular.module('WeekI.controllers', [])
             ];
 
             User.dashboard()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.items = data;
                 })
                 .error(handleError);
 
             User.show()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.user = data;
                     $scope.$broadcast('user.loaded');
                 })
@@ -140,7 +140,7 @@ angular.module('WeekI.controllers', [])
             $scope.user_identities = User.identities;
         };
 
-        var logout = function() {
+        var logout = function () {
             Session.clear();
             $state.go('splash.login');
         };
@@ -154,11 +154,11 @@ angular.module('WeekI.controllers', [])
 
         var mobileView = 992;
 
-        $scope.getWidth = function() {
+        $scope.getWidth = function () {
             return window.innerWidth;
         };
 
-        $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+        $scope.$watch($scope.getWidth, function (newValue, oldValue) {
             if (newValue >= mobileView) {
                 if (angular.isDefined(Storage.get('toggle'))) {
                     $scope.toggle = !Storage.get('toggle');
@@ -170,16 +170,16 @@ angular.module('WeekI.controllers', [])
             }
         });
 
-        $scope.toggleSidebar = function() {
+        $scope.toggleSidebar = function () {
             $scope.toggle = !$scope.toggle;
             Storage.set('toggle', $scope.toggle);
         };
 
-        $scope.dropdownClicked = function(index) {
+        $scope.dropdownClicked = function (index) {
             $scope.dropdownItems[index].action();
         };
 
-        window.onresize = function() {
+        window.onresize = function () {
             $scope.$apply();
         };
 
@@ -195,33 +195,31 @@ angular.module('WeekI.controllers', [])
             if ($scope.user) {
                 loadGroups();
             } else {
-                $scope.$on('user.loaded', function() {
+                $scope.$on('user.loaded', function () {
                     loadGroups();
                 });
             }
-
         };
 
-
-        var loadGroups = function() {
+        var loadGroups = function () {
             switch ($scope.user.identity) {
                 case User.identities.administrator:
                 case User.identities.user:
                     Group.list()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.groups = data;
                         })
                         .error(handleError);
                     break;
                 case User.identities.teacher:
                     Group.scored()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.scored_groups = data;
                         })
                         .error(handleError);
 
                     Group.nonScored()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.non_scored_groups = data;
                         })
                         .error(handleError);
@@ -236,8 +234,8 @@ angular.module('WeekI.controllers', [])
             Error.handleError(data, status);
         };
 
-        $scope.show = function(group) {
-            $state.transitionTo('dashboard.groups.show', { groupId: group.id });
+        $scope.show = function (group) {
+            $state.transitionTo('dashboard.groups.show', {groupId: group.id});
         };
 
         initialize();
@@ -251,7 +249,7 @@ angular.module('WeekI.controllers', [])
             $scope.status = Group.status;
         };
 
-        var loadGroup = function() {
+        var loadGroup = function () {
             Group.show($stateParams.groupId)
                 .success(function (data, status) {
                     $scope.group = data;
@@ -260,7 +258,7 @@ angular.module('WeekI.controllers', [])
                 .error(handleError);
         };
 
-        var updateRequestButton = function(group) {
+        var updateRequestButton = function (group) {
             switch (group.status) {
                 case 0:
                     $scope.request_membership_button = 'Esperando respuesta...';
@@ -279,7 +277,7 @@ angular.module('WeekI.controllers', [])
             Error.handleError(data, status);
         };
 
-        $scope.requestMembership = function(group) {
+        $scope.requestMembership = function (group) {
             switch (group.status) {
                 case 0:
                     break;
@@ -296,7 +294,7 @@ angular.module('WeekI.controllers', [])
 
         };
 
-        $scope.acceptMembership = function(user) {
+        $scope.acceptMembership = function (user) {
             Group.acceptMembership(user.id)
                 .success(loadGroup)
                 .error(handleError);
@@ -328,11 +326,11 @@ angular.module('WeekI.controllers', [])
             $scope.group = data;
         };
 
-        var groupSuccess = function(data, status) {
+        var groupSuccess = function (data, status) {
             $state.go('dashboard.groups.list');
         };
 
-        var handleError = function(data, status) {
+        var handleError = function (data, status) {
             Error.handleError(data, status);
             if (status == 422) {
                 $scope.errors = data.errors;
@@ -358,15 +356,15 @@ angular.module('WeekI.controllers', [])
 
         };
 
-        var loadCourses = function() {
+        var loadCourses = function () {
             Course.taken()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.courses_taken = data;
                 })
                 .error(handleError);
 
             Course.notTaken()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.courses_not_taken = data;
                 })
                 .error(handleError);
@@ -376,19 +374,19 @@ angular.module('WeekI.controllers', [])
             Error.handleError(data, status);
         };
 
-        var addCourseProfessor = function(professor) {
+        var addCourseProfessor = function (professor) {
             Course.addProfessor(professor.course_professor_id)
                 .success(loadCourses)
                 .error(handleError);
         };
 
-        $scope.addCourse = function(course) {
+        $scope.addCourse = function (course) {
 
             var modalInstance = $modal.open({
                 templateUrl: 'course/modal',
                 controller: 'CourseModalCtrl',
                 resolve: {
-                    courseId: function() {
+                    courseId: function () {
                         return course.id;
                     }
                 }
@@ -399,14 +397,14 @@ angular.module('WeekI.controllers', [])
             });
         };
 
-        $scope.destroyCourse = function(course) {
+        $scope.destroyCourse = function (course) {
             Course.destroyProfessor(course.course_professor_user_id)
                 .success(loadCourses)
                 .error(handleError);
-        }
+        };
 
-        $scope.show = function(course) {
-            $state.transitionTo('dashboard.courses.show', { courseId: course.id });
+        $scope.show = function (course) {
+            $state.transitionTo('dashboard.courses.show', {courseId: course.id});
         };
 
         initialize();
@@ -415,9 +413,9 @@ angular.module('WeekI.controllers', [])
 
     .controller('CourseModalCtrl', function ($scope, $modalInstance, courseId, Course, Error) {
 
-        var initialize = function() {
+        var initialize = function () {
             Course.professors(courseId)
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.professors = data;
                     $scope.selected = $scope.professors[0];
                 })
@@ -425,7 +423,7 @@ angular.module('WeekI.controllers', [])
 
         };
 
-        var handleError = function(data, status) {
+        var handleError = function (data, status) {
             Error.handleError(data, status);
         };
 
@@ -480,11 +478,11 @@ angular.module('WeekI.controllers', [])
             $scope.course = data;
         };
 
-        var courseSuccess = function(data, status) {
+        var courseSuccess = function (data, status) {
             $state.go('dashboard.courses.list');
         };
 
-        var handleError = function(data, status) {
+        var handleError = function (data, status) {
             Error.handleError(data, status);
             if (status == 422) {
                 $scope.errors = data.errors;
@@ -505,7 +503,7 @@ angular.module('WeekI.controllers', [])
         var initialize = function () {
             $scope.professors = [];
             Professor.list()
-                .success(function(data, status) {
+                .success(function (data, status) {
                     $scope.professors = data;
                 })
                 .error(handleError);
@@ -542,11 +540,11 @@ angular.module('WeekI.controllers', [])
             $scope.professor = data;
         };
 
-        var professorSuccess = function(data, status) {
+        var professorSuccess = function (data, status) {
             $state.go('dashboard.professors.list');
         };
 
-        var handleError = function(data, status) {
+        var handleError = function (data, status) {
             Error.handleError(data, status);
             if (status == 422) {
                 $scope.errors = data.errors;
@@ -560,4 +558,4 @@ angular.module('WeekI.controllers', [])
         };
 
         initialize();
-    })
+    });
