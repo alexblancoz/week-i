@@ -676,7 +676,7 @@ angular.module('WeekI.controllers', [])
     .controller('ScoresFormCtrl', function ($scope, $state, $stateParams, Error, Score) {
         var initialize = function () {
             $scope.errors = {};
-            $scope.group = {};
+            $scope.score = {};
         };
 
         var scoreSuccess = function (data, status) {

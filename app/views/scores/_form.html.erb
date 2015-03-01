@@ -1,13 +1,65 @@
 <div class=row>
-  <div class=col-lg-6>
+  <div class=col-lg-12>
     <rd-widget>
       <rd-widget-header icon="fa-floppy-o" title="Grupos"><a href="#/dashboard/scores/list">Atr&aacute;s</a></rd-widget-header>
       <form role="form" ng-submit="save(score)">
         <rd-widget-body classes="no-padding">
           <div class="panel-body">
             <div class="form-score">
-              <label>Nombre</label>
-              <input type="text" class="form-control" placeholder="Nombre del grupo" ng-model="score.name">
+              <label>¿Qu&eacute; tan innovadora es la App presentada por el equipo?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.innovation_score" value="1">  No es innovadora. No agrega valor a un posible cliente con respecto a otras soluciones parecidas. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="2">  Es innovadora pero, No es posible crear la innovación propuesta.<br/>
+                <input type="radio" ng-model="score.innovation_score" value="3">  Es innovadora pero no queda claro que tan deseable es para los clientes el valor agregado propuesto. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="4">  La innovación agrega valor para la gente pero su desarrollo no ha sido bien ejecutado. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="5">  La App presentada es innovadora, útil para la gente y ha sido bien realizada. <br/>
+              </div>
+
+              <label>¿Qu&eacute; tan creativa es la solución propuesta con la App presentada?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.creativity_score" value="1">  No es creativa. No imaginan nada aunque sea un poco diferente a lo ya existente. <br/>
+                <input type="radio" ng-model="score.creativity_score" value="2">  Crean un concepto nuevo pero no pueden explicarlo.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="3">  Crean un concepto nuevo pero no es fácil de entender.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="4">  Crean un concepto nuevo fácil de entender pero se confunde mucho con otras ideas.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="5">  Crean un concepto nuevo fácil de entender pero se confunde mucho con otras ideas.<br/>
+              </div>
+
+
+              <label>¿Es funcional la App desarrollada? </label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.functionality_score" value="1">  No es funcional. Es imposible usar la App.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="2">  Es posible usar la App pero, es muy dificil y nada intuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="3">  Es posible usar la App con algo de esfuerzo pero, no es untuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="4">  Es posible usar la App fácilmente pero, es muy poco intuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="5">  Es fácil usar la App y es intuitivo para que sirve cada elemento.<br/>
+              </div>
+
+
+              <label>¿Se aprecia un modelo de negocios aplicado al desarrollo de la App?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.business_model_score" value="1">  No contempla el modelo de negocios.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="2">  Diseña el negocio, sin considerar beneficios.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="3">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener de manera muy general.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="4">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener, como atraer clientes, definir ofertas de producto e implementar estrategias publicitarias pero no las vincula a la configuración de los recursos de la empresa.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="5">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener, como atraer clientes, definir ofertas de producto e implementar estrategias publicitarias vinculadas a la configuración de los recursos de la empresa.<br/>
+              </div>
+
+              <label>¿Utiliza herramientas para el modelado de negocios de la App?</label>
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.modeling_tools_score" value="1">  No utiliza herramientas para el modelado de negocios.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="2">  Hace un intento de utilizar herramientas de modelado de negocios pero finalmente no la utiliza.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="3">  Utiliza canvas para el modelado de negocios, pero no sigue estándares.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="4">  Utiliza canvas para la representación de algunos de los elementos del modelo del negocio.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="5">  Utiliza canvas para la representación de todos los elementos del modelo del negocio.<br/>
+              </div>
+
+              <div>
+                <input type="text" class="form-control" placeholder="Observaciones" ng-model="score.observations">
+              </div>
 
               <div class="errors" ng-show="errors.name">
                 <p class="error" ng-repeat="error in errors.name">{{error}}</p>
