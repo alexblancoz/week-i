@@ -9,12 +9,23 @@ angular.module('WeekI.controllers', [])
         };
     })
 
-    .controller('SplashCtrl', function ($scope, $state, Storage, Session) {
+    .controller('SplashCtrl', function ($scope, $state, Storage, Session, User) {
 
         var initialize = function () {
             var session = Session.load();
             if (session.token && session.secret && session.user_identity) {
-                $state.go('dashboard.groups.list');
+                switch (session.user_identity) {
+                    case User.identities.administrator:
+                    case User.identities.user:
+                        $state.go('dashboard.groups.list');
+                        break;
+                    case User.identities.teacher:
+                        $state.go('dashboard.scores.list');
+                        break;
+                    default:
+                        Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                        break;
+                }
             }
         };
 
@@ -50,7 +61,18 @@ angular.module('WeekI.controllers', [])
 
         var loginSuccess = function (data, status) {
             Session.save(data.token, data.secret, data.user_identity);
-            $state.go('dashboard.groups.list');
+            switch (data.user_identity) {
+                case User.identities.administrator:
+                case User.identities.user:
+                    $state.go('dashboard.groups.list');
+                    break;
+                case User.identities.teacher:
+                    $state.go('dashboard.scores.list');
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    break;
+            }
         };
 
         var handleError = function (data, status) {
@@ -89,7 +111,18 @@ angular.module('WeekI.controllers', [])
 
         var registerSuccess = function (data, status) {
             Session.save(data.token, data.secret, data.user_identity);
-            $state.go('dashboard.groups.list');
+            switch (data.user_identity) {
+                case User.identities.administrator:
+                case User.identities.user:
+                    $state.go('dashboard.groups.list');
+                    break;
+                case User.identities.teacher:
+                    $state.go('dashboard.scores.list');
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    break;
+            }
         };
 
         var handleError = function (data, status) {
@@ -187,7 +220,7 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('GroupsCtrl', function ($scope, $state, Group, Error, User) {
+    .controller('GroupsCtrl', function ($scope, $state, Group, Error, User, Score) {
 
         var initialize = function () {
             $scope.groups = [];
@@ -212,13 +245,13 @@ angular.module('WeekI.controllers', [])
                         .error(handleError);
                     break;
                 case User.identities.teacher:
-                    Group.scored()
+                    Score.scoredGroups()
                         .success(function (data, status) {
                             $scope.scored_groups = data;
                         })
                         .error(handleError);
 
-                    Group.nonScored()
+                    Score.nonScoredGroups()
                         .success(function (data, status) {
                             $scope.non_scored_groups = data;
                         })
@@ -580,4 +613,51 @@ angular.module('WeekI.controllers', [])
         };
 
         initialize();
+    })
+
+    .controller('ScoresCtrl', function ($scope, $state, Group, Error, User, Score) {
+
+        var initialize = function () {
+            $scope.scores = [];
+
+            if ($scope.user) {
+                loadScores();
+            } else {
+                $scope.$on('user.loaded', function () {
+                    loadScores();
+                });
+            }
+        };
+
+        var loadScores = function () {
+            switch ($scope.user.identity) {
+                case User.identities.teacher:
+                    Score.scoredGroups()
+                        .success(function (data, status) {
+                            $scope.scored_groups = data;
+                        })
+                        .error(handleError);
+
+                    Score.nonScoredGroups()
+                        .success(function (data, status) {
+                            $scope.non_scored_groups = data;
+                        })
+                        .error(handleError);
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    break;
+            }
+        };
+
+        var handleError = function (data, status) {
+            Error.handleError(data, status);
+        };
+
+        $scope.show = function (group) {
+            $state.transitionTo('dashboard.groups.show', {groupId: group.id});
+        };
+
+        initialize();
+
     });

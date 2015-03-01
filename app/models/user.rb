@@ -46,9 +46,9 @@ class User < ActiveRecord::Base
         TEACHER => {
             dashboard: [
                 {
-                    label: 'Grupos',
-                    link: 'groups/list',
-                    icon: 'fa-users'
+                    label: 'Calificaciones',
+                    link: 'scores/list',
+                    icon: 'fa-star-half-o'
                 }
               ]
         }

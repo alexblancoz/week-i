@@ -102,15 +102,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 list: function () {
                     return this.post('list.json', {});
                 },
-
-                scored: function () {
-                    return this.post('scored.json', {});
-                },
-
-                nonScored: function () {
-                    return this.post('non_scored.json', {});
-                },
-
+                
                 show: function (groupId) {
                     return this.post('show.json', {
                         data: {

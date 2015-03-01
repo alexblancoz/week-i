@@ -16,7 +16,6 @@ class Group < ActiveRecord::Base
   scope :base_count, ->{ select('COUNT(groups.id) AS count') }
   scope :base_users, ->{ select('users.name AS user_name, users.last_names AS user_last_names') }
   scope :base_group_users, ->{ select('group_users.status') }
-  scope :base_scores, ->{ select('scores.id, scores.innovation_score AS score_innovation_score, scores.creativity_score AS score_creativity_score, scores.functionality_score AS score_functionality_score, scores.business_model_score AS score_business_model_score, scores.modeling_tools_score AS score_modeling_tools_score') }
 
   #joins
   scope :with_users, ->{ joins('INNER JOIN users ON users.id = groups.owner_id') }
@@ -26,7 +25,6 @@ class Group < ActiveRecord::Base
   #wheres
   scope :filter_by_id, ->(id){ where('groups.id = ?', id) }
   scope :filter_by_user, ->(user_id){ where('groups.owner_id = ?', user_id) }
-  scope :filter_by_no_score, ->{ where('scores.id IS NULL') }
 
   #methods
 

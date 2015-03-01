@@ -1,7 +1,6 @@
-
 angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'WeekI.services', 'WeekI.resources', 'WeekI.directives'])
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
@@ -137,8 +136,38 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
                         controller: 'ProfessorsFormCtrl'
                     }
                 }
-            });
+            })
 
+
+            .state('dashboard.scores', {
+                abstract: true,
+                url: '/scores',
+                views: {
+                    'dashboardContent': {
+                        template: '<ui-view/>'
+                    }
+                }
+            })
+
+            .state('dashboard.scores.list', {
+                url: '/list',
+                views: {
+                    '': {
+                        templateUrl: '/scores',
+                        controller: 'ScoresCtrl'
+                    }
+                }
+            })
+
+            .state('dashboard.scores.form', {
+                url: '/form?groupId',
+                views: {
+                    '': {
+                        templateUrl: '/scores/new',
+                        controller: 'ScoresFormCtrl'
+                    }
+                }
+            });
 
 
         $urlRouterProvider.otherwise('/splash/login');

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <rd-widget ng-if="user.identity != user_identities.teacher">
+    <rd-widget>
       <rd-widget-header icon="fa-tasks" title="Grupos">
         <a href="#/dashboard/groups/form" ng-if="user.identity == user_identities.user">Crear</a></rd-widget-header>
       <rd-widget-body classes="no-padding">
@@ -23,55 +23,4 @@
       </rd-widget-body>
     </rd-widget>
   </div>
-  <div class="col-lg-6">
-    <rd-widget ng-if="user.identity == user_identities.teacher">
-      <rd-widget-header icon="fa-tasks" title="Grupos calificados"></rd-widget-header>
-      <rd-widget-body classes="no-padding">
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <tbody>
-            <tr>
-              <th>Nombre</th>
-              <th>Due&ntilde;o</th>
-              <th>N&uacute;mero de miembros</th>
-              <th>Calificaci&oacute;n</th>
-            </tr>
-            <tr ng-repeat="group in scored_groups" ng-click="show(group)">
-              <td>{{group.name}}</td>
-              <td>{{group.user_name}} {{group.user_last_names}}</td>
-              <td>{{group.member_count}}</td>
-              <td>{{group.score}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div class="col-lg-6">
-
-
-    <rd-widget ng-if="user.identity == user_identities.teacher">
-      <rd-widget-header icon="fa-tasks" title="Grupos no calificados"></rd-widget-header>
-      <rd-widget-body classes="no-padding">
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <tbody>
-            <tr>
-              <th>Nombre</th>
-              <th>Due&ntilde;o</th>
-              <th>N&uacute;mero de miembros</th>
-            </tr>
-            <tr ng-repeat="group in non_scored_groups" ng-click="show(group)">
-              <td>{{group.name}}</td>
-              <td>{{group.user_name}} {{group.user_last_names}}</td>
-              <td>{{group.member_count}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-</div>
 </div>
