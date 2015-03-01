@@ -27,7 +27,13 @@ class User < ActiveRecord::Base
                     link: 'professors/list',
                     icon: 'fa-graduation-cap'
                 },
-            ]
+                {
+                    label: 'Usuarios',
+                    link: 'users/list',
+                    icon: 'fa-user'
+                }
+            ],
+            name: 'Administrador'
         },
         USER => {
             dashboard: [
@@ -41,7 +47,8 @@ class User < ActiveRecord::Base
                     link: 'courses/list',
                     icon: 'fa-book'
                 }
-            ]
+            ],
+            name: 'Alumno'
         },
         TEACHER => {
             dashboard: [
@@ -50,13 +57,19 @@ class User < ActiveRecord::Base
                     link: 'scores/list',
                     icon: 'fa-star-half-o'
                 }
-              ]
+              ],
+            name: 'Profesor'
         }
     }
 
     def self.keys
       @@keys ||= LIST.keys
     end
+
+    def self.object_values
+      @@object_values ||= LIST.map { |key, value| {key: key, name: value[:name]} }
+    end
+
   end
 
   module Major

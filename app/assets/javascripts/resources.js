@@ -63,6 +63,11 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     return this.post('dashboard.json');
                 },
 
+                identities: function () {
+                    return this.post('identities.json');
+                },
+
+
                 majors: function () {
                     return this.post('majors.json');
                 },
@@ -71,7 +76,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     return this.post('campuses.json');
                 },
 
-                identities: {
+                Identities: {
                     administrator: 0,
                     user: 1,
                     teacher: 2

@@ -33,26 +33,6 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('AlertsCtrl', function ($scope) {
-        $scope.alerts = [{
-            type: 'success',
-            msg: 'Thanks for visiting! Feel free to create pull requests to improve the dashboard!'
-        }, {
-            type: 'danger',
-            msg: 'Found a bug? Create an issue with as many details as you can.'
-        }];
-
-        $scope.addAlert = function () {
-            $scope.alerts.push({
-                msg: 'Another alert!'
-            });
-        };
-
-        $scope.closeAlert = function (index) {
-            $scope.alerts.splice(index, 1);
-        };
-    })
-
     .controller('LoginCtrl', function ($scope, $state, Session, User, Helper, Error) {
 
         var initialize = function () {
@@ -120,7 +100,7 @@ angular.module('WeekI.controllers', [])
                     $state.go('dashboard.scores.list');
                     break;
                 default:
-                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usuario.');
                     break;
             }
         };
@@ -170,7 +150,7 @@ angular.module('WeekI.controllers', [])
                 })
                 .error(handleError);
 
-            $scope.user_identities = User.identities;
+            $scope.user_identities = User.Identities;
         };
 
         var logout = function () {
@@ -236,8 +216,8 @@ angular.module('WeekI.controllers', [])
 
         var loadGroups = function () {
             switch ($scope.user.identity) {
-                case User.identities.administrator:
-                case User.identities.user:
+                case User.Identities.administrator:
+                case User.Identities.user:
                     Group.list()
                         .success(function (data, status) {
                             $scope.groups = data;
@@ -258,7 +238,7 @@ angular.module('WeekI.controllers', [])
                         .error(handleError);
                     break;
                 default:
-                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usuario.');
                     break;
             }
         };
@@ -386,36 +366,36 @@ angular.module('WeekI.controllers', [])
             $scope.courses_not_taken = [];
             $scope.courses = [];
 
-            if ($scope.user){
-             loadCourses();   
+            if ($scope.user) {
+                loadCourses();
             } else {
-                $scope.$on('user.loaded', function() {
-                    loadCourses(); 
+                $scope.$on('user.loaded', function () {
+                    loadCourses();
                 });
-            }                
+            }
         };
 
-        var loadCourses = function() {
+        var loadCourses = function () {
 
             switch ($scope.user.identity) {
-                case User.identities.administrator:
+                case User.Identities.administrator:
 
                     Course.list()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.courses = data;
                         })
                         .error(handleError);
                     break;
-                case User.identities.user:
+                case User.Identities.user:
 
                     Course.taken()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.courses_taken = data;
                         })
                         .error(handleError);
 
                     Course.notTaken()
-                        .success(function(data, status) {
+                        .success(function (data, status) {
                             $scope.courses_not_taken = data;
                         })
                         .error(handleError);
@@ -631,7 +611,7 @@ angular.module('WeekI.controllers', [])
 
         var loadScores = function () {
             switch ($scope.user.identity) {
-                case User.identities.teacher:
+                case User.Identities.teacher:
                     Score.scoredGroups()
                         .success(function (data, status) {
                             $scope.scored_groups = data;
@@ -645,9 +625,60 @@ angular.module('WeekI.controllers', [])
                         .error(handleError);
                     break;
                 default:
-                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usuario.');
                     break;
             }
+        };
+
+        var handleError = function (data, status) {
+            Error.handleError(data, status);
+        };
+
+        initialize();
+
+    })
+
+    .controller('ScoresFormCtrl', function ($scope, $state, $stateParams, Error, Score) {
+        var initialize = function () {
+            $scope.errors = {};
+            $scope.group = {};
+        };
+
+        var scoreSuccess = function (data, status) {
+            $state.go('dashboard.scores.list');
+        };
+
+        var handleError = function (data, status) {
+            Error.handleError(data, status);
+            if (status == 422) {
+                $scope.errors = data.errors;
+            }
+        };
+
+        $scope.save = function (score) {
+            Score.save(score)
+                .success(scoreSuccess)
+                .error(handleError)
+        };
+
+        initialize();
+    })
+
+    .controller('UsersCtrl', function ($scope, $state, User, Error) {
+
+        var initialize = function () {
+            $scope.users = [];
+            User.list()
+                .success(function (data, status) {
+                    $scope.users = data;
+                })
+                .error(handleError);
+
+            User.identities()
+                .success(function (data, status) {
+                    $scope.identities = data;
+                })
+                .error(handleError);
         };
 
         var handleError = function (data, status) {
@@ -659,5 +690,4 @@ angular.module('WeekI.controllers', [])
         };
 
         initialize();
-
     });
