@@ -1,25 +1,25 @@
-<%= form_for(@professor) do |f| %>
-  <% if @professor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@professor.errors.count, "error") %> prohibited this professor from being saved:</h2>
-
-      <ul>
-      <% @professor.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<div class=row>
+  <div class=col-lg-6>
+    <rd-widget>
+      <rd-widget-header icon="fa-floppy-o" title="Profesores"><a href="#/dashboard/professors/list">Atr&aacute;s</a></rd-widget-header>
+      <form role="form" ng-submit="save(professor)">
+        <rd-widget-body classes="no-padding">
+          <div class="panel-body">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre del profesor" ng-model="professor.name">
+              <label>Apellidos</label>
+              <input type="text" class="form-control" placeholder="Apellidos del profesor" ng-model="professor.last_names">
+              <div class="errors" ng-show="errors.name">
+                <p class="error" ng-repeat="error in errors.name">{{error}}</p>
+              </div>
+            </div>
+          </div>
+        </rd-widget-body>
+        <rd-widget-footer>
+          <button type="submit" class="btn btn-default">Guardar</button>
+        </rd-widget-footer>
+      </form>
+    </rd-widget>
   </div>
-  <div class="field">
-    <%= f.label :last_names %><br>
-    <%= f.text_field :last_names %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

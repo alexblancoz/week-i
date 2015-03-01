@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                 {
                     label: 'Profesores',
                     link: 'professors/list',
-                    icon: 'fa-book'
+                    icon: 'fa-graduation-cap'
                 },
             ]
         },
@@ -43,7 +43,20 @@ class User < ActiveRecord::Base
                 }
             ]
         },
-        TEACHER => {}
+        TEACHER => {
+            dashboard: [
+                {
+                    label: 'Grupos',
+                    link: 'groups/list',
+                    icon: 'fa-users'
+                },
+                {
+                    label: 'Materias',
+                    link: 'courses/list',
+                    icon: 'fa-book'
+                }
+            ]         
+        }
     }
 
     def self.keys
