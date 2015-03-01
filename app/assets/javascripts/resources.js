@@ -59,15 +59,15 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                dashboard: function() {
+                dashboard: function () {
                     return this.post('dashboard.json');
                 },
 
-                majors: function() {
+                majors: function () {
                     return this.post('majors.json');
                 },
 
-                campuses: function() {
+                campuses: function () {
                     return this.post('campuses.json');
                 },
 
@@ -137,7 +137,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                addMembership: function(groupId) {
+                addMembership: function (groupId) {
                     return this.post('add_membership.json', {
                         data: {
                             id: groupId
@@ -145,11 +145,11 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                destroyMembership: function() {
+                destroyMembership: function () {
                     return this.post('destroy_membership.json', {});
                 },
 
-                acceptMembership: function(userId) {
+                acceptMembership: function (userId) {
                     return this.post('accept_membership.json', {
                         data: {
                             id: userId
@@ -187,7 +187,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 list: function () {
                     return this.post('list.json', {});
                 },
-                
+
                 taken: function () {
                     return this.post('taken.json', {});
                 },
@@ -230,7 +230,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                addProfessor: function(courseProfessorId) {
+                addProfessor: function (courseProfessorId) {
                     return this.post('add_professor.json', {
                         data: {
                             id: courseProfessorId
@@ -238,7 +238,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                professors: function(courseId) {
+                professors: function (courseId) {
                     return this.post('professors.json', {
                         data: {
                             id: courseId
@@ -251,7 +251,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
     }])
 
-.factory('Professor', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
+    .factory('Professor', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
 
         var Professor = ActiveRecord.extend(
             {
@@ -284,7 +284,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 destroy: function (courseId) {
                     return this.post('destroy.json', {
                         data: {
-                            id: professorId
+                            id: courseId
                         }
                     });
                 }
@@ -292,4 +292,55 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
         return Professor;
 
-    }]);
+    }])
+
+    .factory('Score', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
+
+        var Score = ActiveRecord.extend(
+            {
+                $urlRoot: Configuration.apiEndpoint + '/scores',
+
+                $dataWrapper: 'score',
+
+                $headers: function () {
+                    return {
+                        'Auth-Token': Storage.get('token'),
+                        'Auth-Secret': Storage.get('secret')
+                    };
+                }
+            },
+            {
+                list: function () {
+                    return this.post('list.json', {});
+                },
+
+                scoredGroups: function () {
+                    return this.post('scored_groups.json', {});
+                },
+
+                nonScoredGroups: function () {
+                    return this.post('non_scored_groups.json', {});
+                },
+
+                save: function (params) {
+                    var action = 'create.json';
+                    if (params.hasOwnProperty('id') && params.id != null) {
+                        action = 'update.json';
+                    }
+                    return this.post(action, {
+                        data: params
+                    });
+                },
+
+                destroy: function (scoreId) {
+                    return this.post('destroy.json', {
+                        data: {
+                            id: scoreId
+                        }
+                    });
+                }
+            });
+
+        return Score;
+
+    }]);;

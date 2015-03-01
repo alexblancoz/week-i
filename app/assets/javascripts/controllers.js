@@ -116,6 +116,14 @@ angular.module('WeekI.controllers', [])
 
         var initialize = function() {
             $scope.items = [];
+
+            $scope.dropdownItems = [
+                {
+                    label: 'Cerrar sessión',
+                    action: logout
+                }
+            ];
+
             User.dashboard()
                 .success(function(data, status) {
                     $scope.items = data;
@@ -125,11 +133,16 @@ angular.module('WeekI.controllers', [])
             User.show()
                 .success(function(data, status) {
                     $scope.user = data;
-                    $scope.$emit('user.loaded');
+                    $scope.$broadcast('user.loaded');
                 })
                 .error(handleError);
 
             $scope.user_identities = User.identities;
+        };
+
+        var logout = function() {
+            Session.clear();
+            $state.go('splash.login');
         };
 
         var handleError = function (data, status) {
@@ -155,12 +168,15 @@ angular.module('WeekI.controllers', [])
             } else {
                 $scope.toggle = false;
             }
-
         });
 
         $scope.toggleSidebar = function() {
             $scope.toggle = !$scope.toggle;
             Storage.set('toggle', $scope.toggle);
+        };
+
+        $scope.dropdownClicked = function(index) {
+            $scope.dropdownItems[index].action();
         };
 
         window.onresize = function() {
@@ -176,33 +192,44 @@ angular.module('WeekI.controllers', [])
         var initialize = function () {
             $scope.groups = [];
 
-            $scope.$on('user.loaded', function() {
-                switch ($scope.user.identity) {
-                    case User.identities.administrator:
-                    case User.identities.user:
-                        Group.list()
-                            .success(function(data, status) {
-                                $scope.groups = data;
-                            })
-                            .error(handleError);
-                        break;
-                    case User.identities.teacher:
-                        Group.scored()
-                            .success(function(data, status) {
-                                $scope.scored_groups = data;
-                            })
-                            .error(handleError);
+            if ($scope.user) {
+                loadGroups();
+            } else {
+                $scope.$on('user.loaded', function() {
+                    loadGroups();
+                });
+            }
 
-                        Group.nonScored()
-                            .success(function(data, status) {
-                                $scope.non_scored_groups = data;
-                            })
-                            .error(handleError);
-                        break;
-                    default:
-                        break;
-                }
-            });
+        };
+
+
+        var loadGroups = function() {
+            switch ($scope.user.identity) {
+                case User.identities.administrator:
+                case User.identities.user:
+                    Group.list()
+                        .success(function(data, status) {
+                            $scope.groups = data;
+                        })
+                        .error(handleError);
+                    break;
+                case User.identities.teacher:
+                    Group.scored()
+                        .success(function(data, status) {
+                            $scope.scored_groups = data;
+                        })
+                        .error(handleError);
+
+                    Group.nonScored()
+                        .success(function(data, status) {
+                            $scope.non_scored_groups = data;
+                        })
+                        .error(handleError);
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    break;
+            }
         };
 
         var handleError = function (data, status) {
