@@ -175,6 +175,11 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 }
             },
             {
+
+                list: function () {
+                    return this.post('list.json', {});
+                },
+                
                 taken: function () {
                     return this.post('taken.json', {});
                 },

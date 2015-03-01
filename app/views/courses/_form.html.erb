@@ -1,29 +1,27 @@
-<%= form_for(@course) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-      <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<div class=row>
+  <div class=col-lg-6>
+    <rd-widget>
+      <rd-widget-header icon="fa-floppy-o" title="Profesores"><a href="#/dashboard/courses/list">Atr&aacute;s</a></rd-widget-header>
+      <form role="form" ng-submit="save(course)">
+        <rd-widget-body classes="no-padding">
+          <div class="panel-body">
+            <div class="form-group">
+              <label>Clave</label>
+              <input type="text" class="form-control" placeholder="Clave de la materia" ng-model="course.key">
+              <label>Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre de la materia" ng-model="course.name">
+              <label>Semestre</label>
+              <input type="text" class="form-control" placeholder="Semestre de la materia" ng-model="course.semester">
+              <div class="errors" ng-show="errors.name">
+                <p class="error" ng-repeat="error in errors.name">{{error}}</p>
+              </div>
+            </div>
+          </div>
+        </rd-widget-body>
+        <rd-widget-footer>
+          <button type="submit" class="btn btn-default">Guardar</button>
+        </rd-widget-footer>
+      </form>
+    </rd-widget>
   </div>
-  <div class="field">
-    <%= f.label :key %><br>
-    <%= f.text_field :key %>
-  </div>
-  <div class="field">
-    <%= f.label :semester %><br>
-    <%= f.number_field :semester %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

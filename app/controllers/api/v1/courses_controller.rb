@@ -31,7 +31,6 @@ class Api::V1::CoursesController < Api::ApiController
   # POST /api/courses/create.json
   def create
     @course = Api::Course.new(course_params)
-    @course.owner_id = @user.id
     if @course.save
       render json: @course.as_json(Api::Course::Json::SHOW)
     else
@@ -113,7 +112,7 @@ class Api::V1::CoursesController < Api::ApiController
   end
 
   def course_params
-    params.permit(:name)
+    params.permit(:name, :key, :semester)
   end
 
 end
