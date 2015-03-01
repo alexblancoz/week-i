@@ -137,6 +137,26 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
                         controller: 'ProfessorsFormCtrl'
                     }
                 }
+            })
+
+            .state('dashboard.users', {
+                abstract: true,
+                url: '/users',
+                views: {
+                    'dashboardContent': {
+                        template: '<ui-view/>'
+                    }
+                }
+            })
+
+            .state('dashboard.users.list', {
+                url: '/list',
+                views: {
+                    '': {
+                        templateUrl: '/users',
+                        controller: 'UsersCtrl'
+                    }
+                }
             });
 
 

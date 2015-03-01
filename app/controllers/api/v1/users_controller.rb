@@ -2,6 +2,11 @@ class Api::V1::UsersController < Api::ApiController
 
   before_action :assert_user, except: [:login, :create, :majors, :campuses]
 
+  def list
+    @users = User.all 
+    render json: @users.as_json(Api::User::Json::LIST)
+  end
+
   # POST /api/v1/users/login.json
   def login
     @user = Api::User.authenticate(params[:enrollment], params[:password])
@@ -70,6 +75,11 @@ class Api::V1::UsersController < Api::ApiController
   # POST /api/v1/users/campuses.json
   def campuses
     render json: Api::User::Campus.object_values
+  end
+
+  # POST /api/v1/users/identities.json
+  def identities
+    render json: Api::User::Identity.object_values
   end
 
   protected

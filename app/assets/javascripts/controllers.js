@@ -22,26 +22,6 @@ angular.module('WeekI.controllers', [])
 
     })
 
-    .controller('AlertsCtrl', function ($scope) {
-        $scope.alerts = [{
-            type: 'success',
-            msg: 'Thanks for visiting! Feel free to create pull requests to improve the dashboard!'
-        }, {
-            type: 'danger',
-            msg: 'Found a bug? Create an issue with as many details as you can.'
-        }];
-
-        $scope.addAlert = function() {
-            $scope.alerts.push({
-                msg: 'Another alert!'
-            });
-        };
-
-        $scope.closeAlert = function(index) {
-            $scope.alerts.splice(index, 1);
-        };
-    })
-
     .controller('LoginCtrl', function ($scope, $state, Session, User, Helper, Error) {
 
         var initialize = function() {
@@ -137,7 +117,7 @@ angular.module('WeekI.controllers', [])
                 })
                 .error(handleError);
 
-            $scope.user_identities = User.identities;
+            $scope.user_identities = User.Identities;
         };
 
         var logout = function() {
@@ -205,15 +185,15 @@ angular.module('WeekI.controllers', [])
 
         var loadGroups = function() {
             switch ($scope.user.identity) {
-                case User.identities.administrator:
-                case User.identities.user:
+                case User.Identities.administrator:
+                case User.Identities.user:
                     Group.list()
                         .success(function(data, status) {
                             $scope.groups = data;
                         })
                         .error(handleError);
                     break;
-                case User.identities.teacher:
+                case User.Identities.teacher:
                     Group.scored()
                         .success(function(data, status) {
                             $scope.scored_groups = data;
@@ -367,7 +347,7 @@ angular.module('WeekI.controllers', [])
         var loadCourses = function() {
 
             switch ($scope.user.identity) {
-                case User.identities.administrator:
+                case User.Identities.administrator:
 
                     Course.list()
                         .success(function(data, status) {
@@ -375,7 +355,7 @@ angular.module('WeekI.controllers', [])
                         })
                         .error(handleError);
                     break;
-                case User.identities.user:
+                case User.Identities.user:
 
                     Course.taken()
                         .success(function(data, status) {
@@ -582,4 +562,29 @@ angular.module('WeekI.controllers', [])
         };
 
         initialize();
+    })
+
+    .controller('UsersCtrl', function ($scope, $state, User, Error) {
+
+        var initialize = function () {
+            $scope.users = [];
+            User.list()
+                .success(function(data, status) {
+                    $scope.users = data;
+                })
+                .error(handleError);
+
+            User.identities()
+                .success(function(data, status) {
+                    $scope.identities = data;
+                })
+                .error(handleError);
+        };
+
+        var handleError = function (data, status) {
+            Error.handleError(data, status);
+        };
+
+        initialize();
+
     })
