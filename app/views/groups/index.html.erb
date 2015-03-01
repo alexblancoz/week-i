@@ -36,7 +36,7 @@
               <th>N&uacute;mero de miembros</th>
               <th>Calificaci&oacute;n</th>
             </tr>
-            <tr ng-repeat="group in groups" ng-click="show(group)">
+            <tr ng-repeat="group in scored_groups" ng-click="show(group)">
               <td>{{group.name}}</td>
               <td>{{group.user_name}} {{group.user_last_names}}</td>
               <td>{{group.member_count}}</td>
@@ -52,8 +52,7 @@
 
 
     <rd-widget ng-if="user.identity == user_identities.teacher">
-      <rd-widget-header icon="fa-tasks" title="Grupos no calificados">
-        <a href="#/dashboard/groups/form" ng-if="user.identity == user_identities.user">Crear</a></rd-widget-header>
+      <rd-widget-header icon="fa-tasks" title="Grupos no calificados"></rd-widget-header>
       <rd-widget-body classes="no-padding">
         <div class="table-responsive">
           <table class="table table-hover">
@@ -63,7 +62,7 @@
               <th>Due&ntilde;o</th>
               <th>N&uacute;mero de miembros</th>
             </tr>
-            <tr ng-repeat="group in groups" ng-click="show(group)">
+            <tr ng-repeat="group in non_scored_groups" ng-click="show(group)">
               <td>{{group.name}}</td>
               <td>{{group.user_name}} {{group.user_last_names}}</td>
               <td>{{group.member_count}}</td>

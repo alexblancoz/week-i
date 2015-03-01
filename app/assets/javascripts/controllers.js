@@ -125,6 +125,7 @@ angular.module('WeekI.controllers', [])
             User.show()
                 .success(function(data, status) {
                     $scope.user = data;
+                    $scope.$emit('user.loaded');
                 })
                 .error(handleError);
 
@@ -174,10 +175,34 @@ angular.module('WeekI.controllers', [])
 
         var initialize = function () {
             $scope.groups = [];
-            switch (user.identity) {
-                case User.identities.user:
 
-            }
+            $scope.$on('user.loaded', function() {
+                switch ($scope.user.identity) {
+                    case User.identities.administrator:
+                    case User.identities.user:
+                        Group.list()
+                            .success(function(data, status) {
+                                $scope.groups = data;
+                            })
+                            .error(handleError);
+                        break;
+                    case User.identities.teacher:
+                        Group.scored()
+                            .success(function(data, status) {
+                                $scope.scored_groups = data;
+                            })
+                            .error(handleError);
+
+                        Group.nonScored()
+                            .success(function(data, status) {
+                                $scope.non_scored_groups = data;
+                            })
+                            .error(handleError);
+                        break;
+                    default:
+                        break;
+                }
+            });
         };
 
         var handleError = function (data, status) {
