@@ -15,11 +15,11 @@ angular.module('WeekI.controllers', [])
             var session = Session.load();
             if (session.token && session.secret && session.user_identity) {
                 switch (session.user_identity) {
-                    case User.identities.administrator:
-                    case User.identities.user:
+                    case User.Identities.administrator:
+                    case User.Identities.user:
                         $state.go('dashboard.groups.list');
                         break;
-                    case User.identities.teacher:
+                    case User.Identities.teacher:
                         $state.go('dashboard.scores.list');
                         break;
                     default:
@@ -42,11 +42,11 @@ angular.module('WeekI.controllers', [])
         var loginSuccess = function (data, status) {
             Session.save(data.token, data.secret, data.user_identity);
             switch (data.user_identity) {
-                case User.identities.administrator:
-                case User.identities.user:
+                case User.Identities.administrator:
+                case User.Identities.user:
                     $state.go('dashboard.groups.list');
                     break;
-                case User.identities.teacher:
+                case User.Identities.teacher:
                     $state.go('dashboard.scores.list');
                     break;
                 default:
@@ -92,11 +92,11 @@ angular.module('WeekI.controllers', [])
         var registerSuccess = function (data, status) {
             Session.save(data.token, data.secret, data.user_identity);
             switch (data.user_identity) {
-                case User.identities.administrator:
-                case User.identities.user:
+                case User.Identities.administrator:
+                case User.Identities.user:
                     $state.go('dashboard.groups.list');
                     break;
-                case User.identities.teacher:
+                case User.Identities.teacher:
                     $state.go('dashboard.scores.list');
                     break;
                 default:
@@ -224,7 +224,7 @@ angular.module('WeekI.controllers', [])
                         })
                         .error(handleError);
                     break;
-                case User.identities.teacher:
+                case User.Identities.teacher:
                     Score.scoredGroups()
                         .success(function (data, status) {
                             $scope.scored_groups = data;
@@ -676,7 +676,7 @@ angular.module('WeekI.controllers', [])
 
             User.identities()
                 .success(function (data, status) {
-                    $scope.identities = data;
+                    $scope.Identities = data;
                 })
                 .error(handleError);
         };
