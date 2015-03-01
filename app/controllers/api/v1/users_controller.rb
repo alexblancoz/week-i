@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::ApiController
 
-  before_action :assert_user, except: [:login, :create, :majors]
+  before_action :assert_user, except: [:login, :create, :majors, :campuses]
 
   # POST /api/v1/users/login.json
   def login
@@ -67,10 +67,15 @@ class Api::V1::UsersController < Api::ApiController
     render json: Api::User::Major.object_values
   end
 
+  # POST /api/v1/users/campuses.json
+  def campuses
+    render json: Api::User::Campus.object_values
+  end
+
   protected
 
   def user_params
-    params.permit(:name, :last_names, :password, :major, :semester, :enrollment, :password_confirmation)
+    params.permit(:name, :last_names, :password, :major, :campus, :enrollment, :password_confirmation)
   end
 
 end
