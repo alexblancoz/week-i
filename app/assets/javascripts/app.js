@@ -107,7 +107,39 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
                         controller: 'CoursesFormCtrl'
                     }
                 }
+            })
+
+            .state('dashboard.professors', {
+                abstract: true,
+                url: '/professors',
+                views: {
+                    'dashboardContent': {
+                        template: '<ui-view/>'
+                    }
+                }
+            })
+
+            .state('dashboard.professors.list', {
+                url: '/list',
+                views: {
+                    '': {
+                        templateUrl: '/professors',
+                        controller: 'ProfessorsCtrl'
+                    }
+                }
+            })
+
+            .state('dashboard.professors.form', {
+                url: '/form?professorId',
+                views: {
+                    '': {
+                        templateUrl: '/professors/new',
+                        controller: 'ProfessorsFormCtrl'
+                    }
+                }
             });
+
+
 
         $urlRouterProvider.otherwise('/splash/login');
 

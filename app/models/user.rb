@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
                 {
                     label: 'Profesores',
                     link: 'professors/list',
-                    icon: 'fa-book'
+                    icon: 'fa-graduation-cap'
                 },
             ]
         },
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
                     link: 'groups/list',
                     icon: 'fa-users'
                 }
-            ]
+              ]
         }
     }
 

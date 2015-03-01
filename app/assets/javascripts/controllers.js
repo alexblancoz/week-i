@@ -446,4 +446,66 @@ angular.module('WeekI.controllers', [])
         };
 
         initialize();
-    });
+    })
+
+    .controller('ProfessorsCtrl', function ($scope, $state, Professor, Error) {
+
+        var initialize = function () {
+            $scope.professors = [];
+            Professor.list()
+                .success(function(data, status) {
+                    $scope.professors = data;
+                })
+                .error(handleError);
+        };
+
+        var handleError = function (data, status) {
+            Error.handleError(data, status);
+        };
+
+        initialize();
+
+    })
+
+    .controller('ProfessorsFormCtrl', function ($scope, $state, $stateParams, Error, Professor) {
+        var initialize = function () {
+            $scope.errors = {};
+            $scope.professor = {};
+
+            if ($stateParams.professorId != null) {
+                Professor.show($stateParams.professorId)
+                    .success(professorShowSuccess)
+                    .error(handleError)
+                    .finally(loaded);
+            } else {
+                $scope.loading = false;
+            }
+        };
+
+        var loaded = function () {
+            $scope.loading = false;
+        };
+
+        var professorShowSuccess = function (data, status) {
+            $scope.professor = data;
+        };
+
+        var professorSuccess = function(data, status) {
+            $state.go('dashboard.professors.list');
+        };
+
+        var handleError = function(data, status) {
+            Error.handleError(data, status);
+            if (status == 422) {
+                $scope.errors = data.errors;
+            }
+        };
+
+        $scope.save = function (professor) {
+            Professor.save(professor)
+                .success(professorSuccess)
+                .error(handleError)
+        };
+
+        initialize();
+    })

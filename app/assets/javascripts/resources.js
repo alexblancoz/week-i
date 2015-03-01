@@ -236,4 +236,47 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
         return Course;
 
-    }]);;
+    }])
+
+.factory('Professor', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
+
+        var Professor = ActiveRecord.extend(
+            {
+                $urlRoot: Configuration.apiEndpoint + '/professors',
+
+                $dataWrapper: 'professor',
+
+                $headers: function () {
+                    return {
+                        'Auth-Token': Storage.get('token'),
+                        'Auth-Secret': Storage.get('secret')
+                    };
+                }
+            },
+            {
+                list: function () {
+                    return this.post('list.json', {});
+                },
+
+                save: function (params) {
+                    var action = 'create.json';
+                    if (params.hasOwnProperty('id') && params.id != null) {
+                        action = 'update.json';
+                    }
+                    return this.post(action, {
+                        data: params
+                    });
+                },
+
+                destroy: function (courseId) {
+                    return this.post('destroy.json', {
+                        data: {
+                            id: professorId
+                        }
+                    });
+                }
+            });
+
+        return Professor;
+
+    }]);
