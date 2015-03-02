@@ -11,7 +11,7 @@ class Score < ActiveRecord::Base
   validates :modeling_tools_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
   validates :functionality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
   validates :observations, length: { in: 5..512 }, allow_nil: true
-  validates :user_id, numericality: { only_integer: true }, presence: true
+  validates :user_id, numericality: { only_integer: true }, uniqueness: { scope: :group_id }, presence: true
   validates :group_id, numericality: { only_integer: true }, presence: true
 
   #selects
@@ -25,5 +25,11 @@ class Score < ActiveRecord::Base
 
   #wheres
   scope :filter_by_score, ->{ where('scores.id IS NOT NULL') }
+  scope :filter_by_no_score, ->{ where('scores.id IS NULL') }
+
+  #methods
+  def score
+    @score ||= self.innovation_score + self.creativity_score + self.business_model_score + self.modeling_tools_score + self.functionality_score unless self.innovation_score.nil?
+  end
 
 end

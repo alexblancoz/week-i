@@ -143,9 +143,10 @@ class User < ActiveRecord::Base
   #validations
   validates :name, length: { in: 2..100 }, presence: true
   validates :last_names, length: { in: 2..100 }, presence: true
-  validates :enrollment, length: { is: 9}, uniqueness: true, presence: true
   validates :major, presence: true
   validates :campus, numericality: { only_integer: true }, inclusion: { in: Campus.keys }, presence: true
+  validates :enrollment, uniqueness: true, presence: true
+  validate :validate_enrollment
 
   before_save :assert_active, :if => :new_record?
   before_save :assert_verified, :if => :new_record?
@@ -178,10 +179,8 @@ class User < ActiveRecord::Base
   def assert_identity
     if self.enrollment.upcase.include?('A')
       self.identity = Identity::USER
-    elsif self.enrollment.upcase.include?('L')
-      self.identity = Identity::TEACHER
     else
-      return false
+      self.identity = Identity::TEACHER
     end
   end
 
@@ -191,7 +190,13 @@ class User < ActiveRecord::Base
   end
 
   def sanitize_enrollment
-    self.enrollment = self.enrollment.upcase
+    self.enrollment = self.enrollment.upcase if self.enrollment.upcase.include?('A')
+  end
+
+  def validate_enrollment
+    if self.enrollment and self.enrollment.upcase.include?('A')
+      errors.add(:enrollment, I18n.translate('errors.messages.wrong_length', count: 9)) if self.enrollment.size != 9
+    end
   end
 
   def send_verification_email

@@ -1,7 +1,7 @@
 class Api::Score < Score
 
   module Json
-    LIST = {}
+    LIST = { methods: [:score] }
     SHOW = {}
   end
 
