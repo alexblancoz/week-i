@@ -16,5 +16,6 @@ class Professor < ActiveRecord::Base
 
   #wheres
   scope :filter_by_course, ->(course_id){ where('course_professors.course_id = ?', course_id) }
+  scope :filter_by_id, ->(id){ where('professors.id = ?', id) }
 
 end

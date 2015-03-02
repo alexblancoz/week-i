@@ -227,7 +227,7 @@ angular.module('WeekI.controllers', [])
                         .error(handleError);
                     break;
                 default:
-                    Error.customError('Error', 'No se pudo identitficar tu tipo de usuario.');
+                    Error.customError('Error', 'No se pudo identificar tu tipo de usuario.');
                     break;
             }
         };
@@ -360,6 +360,7 @@ angular.module('WeekI.controllers', [])
             $scope.courses_taken = [];
             $scope.courses_not_taken = [];
             $scope.courses = [];
+            $scope.search = {};
 
             if ($scope.user) {
                 loadCourses();
@@ -395,6 +396,8 @@ angular.module('WeekI.controllers', [])
                     break;
             }
         };
+
+
 
         var handleError = function (data, status) {
             Error.handleError(data, status);
@@ -435,6 +438,12 @@ angular.module('WeekI.controllers', [])
 
         $scope.show = function (course) {
             $state.transitionTo('dashboard.courses.show', {courseId: course.id});
+        };
+
+        $scope.destroy = function (course) {
+            Course.destroy(course.id)
+                .success(loadCourses)
+                .error(handleError);
         };
 
         initialize();
@@ -563,10 +572,11 @@ angular.module('WeekI.controllers', [])
         initialize();
     })
 
-    .controller('ProfessorsCtrl', function ($scope, $state, Professor, Error) {
+    .controller('ProfessorsCtrl', function ($scope, $state, Professor, Error, User) {
 
         var initialize = function () {
             $scope.professors = [];
+            $scope.search = {};
             Professor.list()
                 .success(function (data, status) {
                     $scope.professors = data;
@@ -574,8 +584,35 @@ angular.module('WeekI.controllers', [])
                 .error(handleError);
         };
 
+        var loadProfessors = function () {
+
+            switch ($scope.user.identity) {
+                case User.Identities.administrator:
+                    Professor.list()
+                        .success(function (data, status) {
+                            $scope.professors = data;
+                        })
+                        .error(handleError);
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identificar el tipo de profesor.');
+                    break;
+            }
+        };
+
         var handleError = function (data, status) {
             Error.handleError(data, status);
+        };
+
+
+        $scope.show = function (professor) {
+            $state.transitionTo('dashboard.professors.show', {professorId: professor.id});
+        };
+
+        $scope.destroy = function (professor) {
+            Professor.destroy(professor.id)
+                .success(loadProfessors)
+                .error(handleError);
         };
 
         initialize();
