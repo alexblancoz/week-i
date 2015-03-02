@@ -34,4 +34,17 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.secret_key_base = '69f08ff17d5bf01bba498ee94d76b751a45c68819daaa3dec8487fe6deb30aad'
+
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'bemeer.com',
+      user_name:            'contacto@bemeer.com',
+      password:             'hookahcohen',
+      authentication:       'plain',
+      enable_starttls_auto: true  }
 end

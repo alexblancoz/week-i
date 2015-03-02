@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20150221224519) do
     t.string   "hashed_password", limit: 128, null: false
     t.integer  "identity",                    null: false
     t.boolean  "active",                      null: false
+    t.boolean  "verified",                    null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
@@ -104,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150221224519) do
 
   add_foreign_key "groups", "users", name: "groups_owner_id_fk", column: "owner_id"
 
+  add_foreign_key "scores", "groups", name: "scores_group_id_fk"
   add_foreign_key "scores", "users", name: "scores_user_id_fk"
 
 end

@@ -148,11 +148,14 @@ class User < ActiveRecord::Base
   validates :campus, numericality: { only_integer: true }, inclusion: { in: Campus.keys }, presence: true
 
   before_save :assert_active, :if => :new_record?
-  before_save :sanitize_enrollment, :if => :new_record?
+  before_save :assert_verified, :if => :new_record?
   before_save :assert_identity, :if => :new_record?
+  before_save :sanitize_enrollment, :if => :new_record?
+
+  after_save :send_verification_email
 
   #selects
-  scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.campus, users.updated_at, users.created_at') }
+  scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
 
   #joins
@@ -162,6 +165,7 @@ class User < ActiveRecord::Base
   #wheres
   scope :filter_by_group, ->(group_id) { where('group_users.group_id = ?', group_id) }
   scope :filter_by_status, ->(status) { where('group_users.status = ?', status) }
+  scope :filter_by_enrollment, ->(enrollment) { where('users.enrollment = ?', enrollment) }
 
   #methods
 
@@ -181,8 +185,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def assert_verified
+    self.verified = false
+    true
+  end
+
   def sanitize_enrollment
     self.enrollment = self.enrollment.upcase
+  end
+
+  def send_verification_email
+    unless self.verified
+      mail = UserMailer.validate_user(self)
+      mail.deliver!
+    end
   end
 
 end

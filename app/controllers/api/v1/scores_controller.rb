@@ -10,6 +10,7 @@ class Api::V1::ScoresController < Api::ApiController
 
   def create
     @score = Api::Score.new(score_params)
+    @score.user_id = @user.id
     if @score.save
       render json: @score.as_json(Api::Score::Json::SHOW)
     else

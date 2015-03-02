@@ -10,8 +10,14 @@ class Api::ApiController < ApplicationController
   protected
 
   def assert_user
-    render_error(:unauthorized, "Bad credentials") if self.app_session.nil?
+    render_error(:unauthorized, 'Bad credentials') if self.app_session.nil?
     @user = Api::User.find_by_id(self.app_session.id)
+  end
+
+  def assert_verified
+    unless @user.verified
+      render_error(:unauthorized, 'Usuario no verificado') and return false
+    end
   end
 
   def assert_teacher

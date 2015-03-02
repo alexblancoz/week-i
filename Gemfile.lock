@@ -118,6 +118,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   foreigner
   jbuilder (~> 2.0)
+  mail
   pg
   rack-cors
   rails (= 4.1.8)

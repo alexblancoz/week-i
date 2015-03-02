@@ -94,13 +94,14 @@ angular.module('WeekI.controllers', [])
             switch (data.user_identity) {
                 case User.Identities.administrator:
                 case User.Identities.user:
-                    $state.go('dashboard.groups.list');
-                    break;
+                    //$state.go('dashboard.groups.list');
+                    //break;
                 case User.Identities.teacher:
-                    $state.go('dashboard.scores.list');
-                    break;
+                    //$state.go('dashboard.scores.list');
+                    //break;
                 default:
-                    Error.customError('Error', 'No se pudo identitficar tu tipo de usuario.');
+                    //$state.go('splash.login');
+                    Error.customError('Verifica tu email', 'Se te ha enviado un email de verificacion.');
                     break;
             }
         };
@@ -691,6 +692,7 @@ angular.module('WeekI.controllers', [])
         };
 
         $scope.save = function (score) {
+            score.group_id = $stateParams.groupId;
             Score.save(score)
                 .success(scoreSuccess)
                 .error(handleError)

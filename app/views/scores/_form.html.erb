@@ -16,6 +16,10 @@
                 <input type="radio" ng-model="score.innovation_score" value="5">  La App presentada es innovadora, útil para la gente y ha sido bien realizada. <br/>
               </div>
 
+              <div class="errors" ng-show="errors.innovation_score">
+                <p class="error" ng-repeat="error in errors.innovation_score">{{error}}</p>
+              </div>
+
               <label>¿Qu&eacute; tan creativa es la solución propuesta con la App presentada?</label>
 
               <div class="padding-top-medium padding-bottom-medium">
@@ -26,6 +30,9 @@
                 <input type="radio" ng-model="score.creativity_score" value="5">  Crean un concepto nuevo fácil de entender pero se confunde mucho con otras ideas.<br/>
               </div>
 
+              <div class="errors" ng-show="errors.creativity_score">
+                <p class="error" ng-repeat="error in errors.creativity_score">{{error}}</p>
+              </div>
 
               <label>¿Es funcional la App desarrollada? </label>
 
@@ -37,6 +44,9 @@
                 <input type="radio" ng-model="score.functionality_score" value="5">  Es fácil usar la App y es intuitivo para que sirve cada elemento.<br/>
               </div>
 
+              <div class="errors" ng-show="errors.functionality_score">
+                <p class="error" ng-repeat="error in errors.functionality_score">{{error}}</p>
+              </div>
 
               <label>¿Se aprecia un modelo de negocios aplicado al desarrollo de la App?</label>
 
@@ -48,7 +58,12 @@
                 <input type="radio" ng-model="score.business_model_score" value="5">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener, como atraer clientes, definir ofertas de producto e implementar estrategias publicitarias vinculadas a la configuración de los recursos de la empresa.<br/>
               </div>
 
+              <div class="errors" ng-show="errors.business_model_score">
+                <p class="error" ng-repeat="error in errors.business_model_score">{{error}}</p>
+              </div>
+
               <label>¿Utiliza herramientas para el modelado de negocios de la App?</label>
+
               <div class="padding-top-medium padding-bottom-medium">
                 <input type="radio" ng-model="score.modeling_tools_score" value="1">  No utiliza herramientas para el modelado de negocios.<br/>
                 <input type="radio" ng-model="score.modeling_tools_score" value="2">  Hace un intento de utilizar herramientas de modelado de negocios pero finalmente no la utiliza.<br/>
@@ -57,12 +72,16 @@
                 <input type="radio" ng-model="score.modeling_tools_score" value="5">  Utiliza canvas para la representación de todos los elementos del modelo del negocio.<br/>
               </div>
 
+              <div class="errors" ng-show="errors.modeling_tools_score">
+                <p class="error" ng-repeat="error in errors.modeling_tools_score">{{error}}</p>
+              </div>
+
               <div>
                 <input type="text" class="form-control" placeholder="Observaciones" ng-model="score.observations">
               </div>
 
-              <div class="errors" ng-show="errors.name">
-                <p class="error" ng-repeat="error in errors.name">{{error}}</p>
+              <div class="errors" ng-show="errors.observations">
+                <p class="error" ng-repeat="error in errors.observations">{{error}}</p>
               </div>
             </div>
           </div>

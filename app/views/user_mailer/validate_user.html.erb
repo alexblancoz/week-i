@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+</head>
+<body>
+<h1>Bienvenido a la semana de Espacios de Innovación, <%= @user.name %> <%= @user.last_names %></h1>
+
+<p>
+  Te has registrado correctamente, tu m&aacute;tricula es: <%= @user.enrollment %>.<br>
+</p>
+
+<p>
+  Para verificar tu cuenta, sigue el siguiente link: <a href="<%= @url %>">verificar</a>.
+</p>
+
+<p>Gracias por unirte y mucha suerte!</p>
+</body>
+</html>

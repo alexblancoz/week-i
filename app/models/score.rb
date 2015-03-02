@@ -4,9 +4,15 @@ class Score < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
 
-  #Validations
-  #validates :amount, presence: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100
-  validates :observations, length: { in: 5..512 }, presence: true
+  #validations
+  validates :innovation_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
+  validates :creativity_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
+  validates :business_model_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
+  validates :modeling_tools_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
+  validates :functionality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, presence: true
+  validates :observations, length: { in: 5..512 }, allow_nil: true
+  validates :user_id, numericality: { only_integer: true }, presence: true
+  validates :group_id, numericality: { only_integer: true }, presence: true
 
   #selects
   scope :base, ->{ select('scores.id, scores.innovation_score, scores.creativity_score, scores.functionality_score, scores.business_model_score, scores.modeling_tools_score') }

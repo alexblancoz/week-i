@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'course/modal' => 'courses#modal'
 
+  get 'verify' => 'splash#verify'
+
   resources :courses
 
   resources :professors

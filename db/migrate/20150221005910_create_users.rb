@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :hashed_password, limit: 128, null: false
       t.integer :identity, null: false
       t.boolean :active, null: false
+      t.boolean :verified, null: false
 
       t.timestamps null: false
     end

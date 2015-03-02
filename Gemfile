@@ -32,6 +32,8 @@ gem 'bootstrap-sass', '~> 3.3.3'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'mail'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

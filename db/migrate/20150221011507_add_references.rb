@@ -3,6 +3,7 @@ class AddReferences < ActiveRecord::Migration
     add_foreign_key :groups, :users, column: :owner_id
 
     add_foreign_key :scores, :users, column: :user_id
+    add_foreign_key :scores, :groups, column: :group_id
 
     add_foreign_key :course_professors, :courses, column: :course_id
     add_foreign_key :course_professors, :professors, column: :professor_id

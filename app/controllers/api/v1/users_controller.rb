@@ -12,11 +12,16 @@ class Api::V1::UsersController < Api::ApiController
   def login
     @user = Api::User.authenticate(params[:enrollment], params[:password])
     if @user
-      if @user.active
-        render json: @user.token.as_json(Api::Token::Json::SHOW)
+      unless @user.verified
+        render_error(:unauthorized, "Cuenta no verificada.")
       else
-        render_error(:unauthorized, "Cuenta baneada. Contacta un administrador")
+        if @user.active
+          render json: @user.token.as_json(Api::Token::Json::SHOW)
+        else
+          render_error(:unauthorized, "Cuenta baneada. Contacta un administrador")
+        end
       end
+
     else
       render_error(:unauthorized, "Credenciales incorrectas")
     end
@@ -32,8 +37,8 @@ class Api::V1::UsersController < Api::ApiController
     @user = Api::User.new(user_params)
     @user.identity = Api::User::Identity::USER
     if @user.save
-      Api::User.authenticate(@user.enrollment, @user.password)
-      render json: @user.token.as_json(Api::Token::Json::SHOW)
+      #Api::User.authenticate(@user.enrollment, @user.password)
+      render json: @user.as_json(Api::User::Json::SHOW)
     else
       render_errors(:unprocessable_entity, @user.errors)
     end
