@@ -68,9 +68,9 @@
               <th></th>
             </tr>
             <tr ng-repeat="course in courses | filter:search">
-              <td>{{course.key}}</td>
-              <td>{{course.name}}</td>
-              <td>{{course.semester}}</td>
+              <td ng-click="show(course)">{{course.key}}</td>
+              <td ng-click="show(course)">{{course.name}}</td>
+              <td ng-click="show(course)">{{course.semester}}</td>
               <td><a href="#/dashboard/courses/form?courseId={{course.id}}">Editar</a></td>
               <td><a ng-click="destroy(course)">Borrar</a></td>
             </tr>
