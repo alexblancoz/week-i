@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::ApiController
   before_action :assert_administrator, only: [:list]
 
   def list
-    @users = User.all 
+    @users = User.base.base_scores.with_group_users.with_groups.with_scores.group_by_score
     render json: @users.as_json(Api::User::Json::LIST)
   end
 

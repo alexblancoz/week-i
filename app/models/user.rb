@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
                     link: 'scores/list',
                     icon: 'fa-star-half-o'
                 }
-              ],
+            ],
             name: 'Profesor'
         }
     }
@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= ->{
+      @@object_values ||= -> {
         hash = {}
         LIST.each do |key, value|
           hash[key] = value[:name]
@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= ->{
+      @@object_values ||= -> {
         hash = {}
         LIST.each do |key, value|
           hash[key] = value[:name]
@@ -125,7 +125,7 @@ class User < ActiveRecord::Base
     end
 
     def self.object_values
-      @@object_values ||= ->{
+      @@object_values ||= -> {
         hash = {}
         LIST.each do |key, value|
           hash[key] = value[:name]
@@ -141,10 +141,10 @@ class User < ActiveRecord::Base
   has_many :group_users
 
   #validations
-  validates :name, length: { in: 2..100 }, presence: true
-  validates :last_names, length: { in: 2..100 }, presence: true
+  validates :name, length: {in: 2..100}, presence: true
+  validates :last_names, length: {in: 2..100}, presence: true
   validates :major, presence: true
-  validates :campus, numericality: { only_integer: true }, inclusion: { in: Campus.keys }, presence: true
+  validates :campus, numericality: {only_integer: true}, inclusion: {in: Campus.keys}, presence: true
   validates :enrollment, uniqueness: true, presence: true
   validate :validate_enrollment
 
@@ -156,17 +156,23 @@ class User < ActiveRecord::Base
   after_save :send_verification_email
 
   #selects
-  scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
+  scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
+  scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0))) / GREATEST(COUNT(scores.id), 1)  AS score') }
 
   #joins
-  scope :with_group_users, -> { joins('INNER JOIN group_users ON group_users.user_id = users.id') }
-  scope :with_groups, -> { joins('INNER JOIN groups ON group_users.group_id = groups.id') }
+  scope :with_group_users, -> { joins('LEFT JOIN group_users ON group_users.user_id = users.id') }
+  scope :with_groups, -> { joins('LEFT JOIN groups ON group_users.group_id = groups.id OR groups.owner_id = users.id') }
+  scope :with_scores, -> { joins('LEFT JOIN scores ON scores.group_id = groups.id') }
 
   #wheres
   scope :filter_by_group, ->(group_id) { where('group_users.group_id = ?', group_id) }
   scope :filter_by_status, ->(status) { where('group_users.status = ?', status) }
   scope :filter_by_enrollment, ->(enrollment) { where('users.enrollment = ?', enrollment) }
+  scope :filter_by_id, ->(id) { where('users.id = ?', id) }
+
+  #groups
+  scope :group_by_score, -> { group('scores.group_id, users.id') }
 
   #methods
 

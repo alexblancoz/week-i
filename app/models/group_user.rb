@@ -21,7 +21,6 @@ class GroupUser < ActiveRecord::Base
   validates :user_id, :group_id, presence: true
   validates :user_id, numericality: { only_integer: true }, uniqueness: true
   validates :group_id, numericality: { only_integer: true }
-  validate :not_group_owner
 
   #selects
   scope :base, ->{ select('group_users.id, group_users.status, group_users.user_id, group_users.group_id, group_users.updated_at, group_users.created_at') }
@@ -54,10 +53,6 @@ class GroupUser < ActiveRecord::Base
       group.member_count -= 1
       group.save
     end
-  end
-
-  def not_group_owner
-    self.user_id != group.owner_id
   end
 
 end

@@ -29,7 +29,7 @@ class Score < ActiveRecord::Base
 
   #methods
   def score
-    @score ||= self.innovation_score + self.creativity_score + self.business_model_score + self.modeling_tools_score + self.functionality_score unless self.innovation_score.nil?
+    @score ||= self.innovation_score + self.creativity_score + self.business_model_score + self.modeling_tools_score + self.functionality_score unless self.functionality_score.nil?
   end
 
 end

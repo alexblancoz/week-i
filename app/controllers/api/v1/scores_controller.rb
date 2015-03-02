@@ -27,7 +27,7 @@ class Api::V1::ScoresController < Api::ApiController
   protected
 
   def score_params
-    params.permit(:innovation_score, :creativity_score, :functionality_score, :business_model_score, :modeling_tools_score, :observations, :user_id, :group_id)
+    params.permit(:innovation_score, :creativity_score, :functionality_score, :business_model_score, :modeling_tools_score, :observations, :group_id)
   end
 
 end

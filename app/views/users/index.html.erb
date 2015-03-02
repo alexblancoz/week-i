@@ -10,11 +10,13 @@
               <th>Nombre del usuario</th>
               <th>Apellido del usuario</th>
               <th>Rol del usuario</th>
+              <th>Calificaci&oacute;n</th>
             </tr>
             <tr ng-repeat="user in users" ng-click="show(user)">
               <td>{{user.name}}</td>
               <td>{{user.last_names}}</td>
               <td>{{identities[user.identity]}}</td>
+              <td>{{user.score}}</td>
             </tr>
             </tbody>
           </table>
