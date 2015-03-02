@@ -193,10 +193,10 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     return this.post('not_taken.json', {});
                 },
 
-                show: function (groupId) {
+                show: function (courseId) {
                     return this.post('show.json', {
                         data: {
-                            id: groupId
+                            id: courseId
                         }
                     });
                 },
@@ -293,6 +293,14 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     }
                     return this.post(action, {
                         data: params
+                    });
+                },
+
+                show: function (professorId) {
+                    return this.post('show.json', {
+                        data: {
+                            id: professorId
+                        }
                     });
                 },
 

@@ -10,6 +10,23 @@ class Api::V1::ProfessorsController < Api::ApiController
     render json: @professors.as_json(Api::Professor::Json::LIST)
   end
 
+  def show
+    @professor = Api::Professor.base.filter_by_id(params[:id]).first
+    render json: @professor.as_json(Api::Professor::Json::SHOW)
+  end
+
+  def update
+    if @professor.nil?
+      render_error(:expectation_failed, 'No se encontro el profesor')
+    else
+      if @professor.update(professor_params)
+        render json: @professor.as_json(Api::Professor::Json::SHOW)
+      else
+        render_errors(:unprocessable_entity, @professor.errors);
+      end
+    end
+  end
+
   def create
     @professor = Api::Professor.new(professor_params)
     if @professor.save

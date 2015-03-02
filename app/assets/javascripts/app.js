@@ -99,7 +99,7 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
             })
 
             .state('dashboard.courses.form', {
-                url: '/form?groupdId',
+                url: '/form?courseId',
                 views: {
                     '': {
                         templateUrl: '/courses/new',
