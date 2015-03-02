@@ -90,20 +90,7 @@ angular.module('WeekI.controllers', [])
         };
 
         var registerSuccess = function (data, status) {
-            Session.save(data.token, data.secret, data.user_identity);
-            switch (data.user_identity) {
-                case User.Identities.administrator:
-                case User.Identities.user:
-                    //$state.go('dashboard.groups.list');
-                    //break;
-                case User.Identities.teacher:
-                    //$state.go('dashboard.scores.list');
-                    //break;
-                default:
-                    //$state.go('splash.login');
-                    Error.customError('Verifica tu email', 'Se te ha enviado un email de verificacion.');
-                    break;
-            }
+            Error.customError('Verifica tu email', 'Se te ha enviado un email de verificacion.');
         };
 
         var handleError = function (data, status) {
@@ -205,6 +192,7 @@ angular.module('WeekI.controllers', [])
 
         var initialize = function () {
             $scope.groups = [];
+            $scope.search = {};
 
             if ($scope.user) {
                 loadGroups();
@@ -250,6 +238,12 @@ angular.module('WeekI.controllers', [])
 
         $scope.show = function (group) {
             $state.transitionTo('dashboard.groups.show', {groupId: group.id});
+        };
+
+        $scope.destroy = function (group) {
+            Group.destroy(group.id)
+                .success(loadGroups)
+                .error(handleError);
         };
 
         initialize();
