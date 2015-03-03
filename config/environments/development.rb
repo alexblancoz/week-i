@@ -44,7 +44,7 @@ Rails.application.configure do
       port:                 587,
       domain:               'bemeer.com',
       user_name:            'contacto@bemeer.com',
-      password:             'hookahcohen',
+      password:             '1ef037fa83d6d5701aaed923f7e0e67153d0410e',
       authentication:       'plain',
       enable_starttls_auto: true  }
 end
