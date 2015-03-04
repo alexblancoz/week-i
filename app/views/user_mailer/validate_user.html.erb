@@ -57,8 +57,7 @@
                     Te queremos dar la bienvenida a la semana de Espacios de Innovación.<br/>
                     Te has registrado correctamente, tu m&aacute;tricula es: <%= @user.enrollment %>.
                     <br/><br/>
-                    Para poder hacer uso del sistema necesitas verificar tu cuenta siguiendo el siguiente link:
-                    <a href="<%= @url %>">verificar</a>.</font></td>
+                    Para poder hacer uso del sistema necesitas verificar tu cuenta.</font></td>
                 <td width="10%">&nbsp;</td>
               </tr>
               <tr>
@@ -72,12 +71,12 @@
                     </tr>
                     <tr>
                       <td align="center" valign="middle" bgcolor="#006666">
-                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:14px"><em><a href="http://yourlink" target="_blank" style="color:#ffffff; text-decoration: underline">click
+                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:14px"><em><a href="<%= @url %>" target="_blank" style="color:#ffffff; text-decoration: underline">Verificar
                           here</a></em></font></td>
                     </tr>
                     <tr>
                       <td align="center" valign="middle" bgcolor="#006666">
-                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:15px"><strong><a href="http://yourlink" target="_blank" style="color:#ffffff; text-decoration:none"><em>LOREM</em></a></strong></font>
+                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:15px"><strong><a href="<%= @url %>" target="_blank" style="color:#ffffff; text-decoration:none"><em>Cuenta</em></a></strong></font>
                       </td>
                     </tr>
                     <tr>
