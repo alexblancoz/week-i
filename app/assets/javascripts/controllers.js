@@ -90,7 +90,7 @@ angular.module('WeekI.controllers', [])
         };
 
         var registerSuccess = function (data, status) {
-            Error.customError('Verifica tu email', 'Se te ha enviado un email de verificacion.');
+            Error.customError('Verifica tu email', 'Se te ha enviado un email de verificación. Espera algunos minutos.');
             $state.go('splash.login');
         };
 

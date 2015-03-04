@@ -5,8 +5,8 @@ class Api::V1::CoursesController < Api::ApiController
 
   # POST /api/courses/list.json
   def list
-    @courses = paginate(Api::Course.base) if @user.identity == Api::User::Identity::USER
-    @courses = paginate(Api::Course.base) if @user.identity == Api::User::Identity::ADMINISTRATOR
+    @courses = paginate(Api::Course.base.order(:semester)) if @user.identity == Api::User::Identity::USER
+    @courses = paginate(Api::Course.base.order(:semester)) if @user.identity == Api::User::Identity::ADMINISTRATOR
     render json: @courses.as_json(Api::Course::Json::LIST)
   end
 
