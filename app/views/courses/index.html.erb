@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-6">
     <rd-widget  ng-if="user.identity == user_identities.user">
-      <rd-widget-header icon="fa-tasks" title="Materias en las que estas"></rd-widget-header>
+      <rd-widget-header icon="fa-tasks" title="Materias inscritas"></rd-widget-header>
       <rd-widget-body classes="no-padding">
         <div class="table-responsive">
           <table class="table table-hover">
@@ -29,7 +29,7 @@
 
   <div class="col-lg-6">
     <rd-widget ng-if="user.identity == user_identities.user">
-      <rd-widget-header icon="fa-tasks" title="Materias en las que no estas"><input class="form-control search-control" type="text" ng-model="search.key" placeholder="Clave"><input class="form-control search-control" type="text" ng-model="search.name" placeholder="Nombre"></rd-widget-header>
+      <rd-widget-header icon="fa-tasks" title="Materias"><input class="form-control search-control" type="text" ng-model="search.key" placeholder="Clave"><input class="form-control search-control" type="text" ng-model="search.name" placeholder="Nombre"></rd-widget-header>
       <rd-widget-body classes="no-padding">
         <div class="table-responsive">
           <table class="table table-hover">
