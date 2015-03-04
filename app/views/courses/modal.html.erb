@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <div ng-show="professors.length >0">
-    <input type="text" ng-model="search.name" placeholder="Nombre del profesor"> <input type="text" ng-model="search.last_names" placeholder="Apellidos del profesor">
+    <input class="form-control search-control" type="text" ng-model="search.name" placeholder="Nombre del profesor"><input class="form-control search-control" type="text" ng-model="search.last_names" placeholder="Apellidos del profesor">
     <ul>
       <li ng-repeat="professor in professors | filter:search">
         <a ng-click="select(professor)">{{ professor.name }} {{professor.last_names }}</a>
