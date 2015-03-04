@@ -1,19 +1,142 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Bemeer</title>
 </head>
-<body>
-<h1>Bienvenido a la semana de Espacios de Innovación, <%= @user.name %> <%= @user.last_names %></h1>
 
-<p>
-  Te has registrado correctamente, tu m&aacute;tricula es: <%= @user.enrollment %>.<br>
-</p>
-
-<p>
-  Para verificar tu cuenta, sigue el siguiente link: <a href="<%= @url %>">verificar</a>.
-</p>
-
-<p>Gracias por unirte y mucha suerte!</p>
+<body bgcolor="#8d8e90">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#8d8e90">
+  <tr>
+    <td>
+      <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
+        <tr>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="20" height="30"></td>
+              </tr>
+              <tr>
+                <td width="55"></td>
+                <td width="63">
+                  <a href="http://www.bemeer.com/" target="_blank"><img src="http://i.imgur.com/XXTM8TQ.png?1?9139" width="63" height="99" border="0" alt=""/></a>
+                </td>
+                <td width="393">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td height="46" align="right" valign="middle">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td height="30">
+                        <img src="http://i.imgur.com/WQaqvVn.jpg" width="393" height="30" border="0" alt=""/></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="10%">&nbsp;</td>
+                <td width="80%" align="left" valign="top">
+                  <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#010101; font-size:24px"><strong><em>Hola
+                    <%= @user.name %> <%= @user.last_names %>,</em></strong></font><br/><br/>
+                  <font style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px">
+                    Te queremos dar la bienvenida a la semana de Espacios de Innovación.<br/>
+                    Te has registrado correctamente, tu m&aacute;tricula es: <%= @user.enrollment %>.
+                    <br/><br/>
+                    Para poder hacer uso del sistema necesitas verificar tu cuenta siguiendo el siguiente link:
+                    <a href="<%= @url %>">verificar</a>.</font></td>
+                <td width="10%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td align="right" valign="top">
+                  <table width="108" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>
+                        <img src="http://i.imgur.com/BHGrhgN.jpg" width="108" height="9" style="display:block" border="0" alt=""/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="middle" bgcolor="#006666">
+                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:14px"><em><a href="http://yourlink" target="_blank" style="color:#ffffff; text-decoration: underline">click
+                          here</a></em></font></td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="middle" bgcolor="#006666">
+                        <font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:15px"><strong><a href="http://yourlink" target="_blank" style="color:#ffffff; text-decoration:none"><em>LOREM</em></a></strong></font>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td height="10" align="center" valign="middle" bgcolor="#006666"></td>
+                    </tr>
+                  </table>
+                </td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><img src="http://i.imgur.com/43MIo3l.jpg" width="598" height="7" style="display:block" border="0" alt=""/>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <table style="margin-left:20px;" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                  <a href="https://www.facebook.com/bemeerteam" target="_blank"><img src="http://i.imgur.com/sSjhTfq.jpg" alt="facebook" width="23" height="19" border="0"/></a>
+                </td>
+                <td>
+                  <a href="https://twitter.com/bemeerteam" target="_blank"><img src="http://i.imgur.com/isHdY84.jpg" alt="twitter" width="27" height="19" border="0"/></a>
+                </td>
+                <td>
+                  <a href="https://www.linkedin.com/company/bemeer" target="_blank"><img src="http://i.imgur.com/eSQG4SF.jpg" alt="linkedin" width="25" height="19" border="0"/></a>
+                </td>
+                <td width="5%">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">
+            <font style="font-family:'Myriad Pro', Helvetica, Arial, sans-serif; color:#231f20; font-size:8px"><strong>Bemeer
+              | Bosque de Ciruelos # 162, Bosques de Las Lomas, Mexico D.F. | Tel: (55) 5104 9318 |
+              <a href="http://yourlink" style="color:#010203; text-decoration:none">contacto@bemeer.com</a></strong></font>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>
