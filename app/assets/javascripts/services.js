@@ -4,7 +4,7 @@ angular.module('WeekI.services', [])
 
     .service('Configuration', function () {
         this.requestProtocol = 'http';
-        this.domainName = '162.243.135.222';
+        this.domainName = 'localhost:3000';
         this.endpoint = this.requestProtocol + '://' + this.domainName;
         this.apiEndpoint = this.endpoint + '/api/v1';
     })

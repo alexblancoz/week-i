@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::ApiController
 
   # POST /api/v1/users/login.json
   def login
-    if self.enrollment.upcase =~ /^A*[0-9]/
+    if params[:enrollment].upcase =~ /^A*[0-9]/
       enrollment = params[:enrollment].upcase
     else
       enrollment = params[:enrollment]
