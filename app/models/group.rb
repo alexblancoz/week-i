@@ -10,6 +10,7 @@ class Group < ActiveRecord::Base
   validate :no_groups, :if => :new_record?
 
   before_save :assert_member_count, :if => :new_record?
+  after_destroy :destroy_group_users
 
   #selects
   scope :base, ->{ select('groups.id, groups.name, groups.owner_id, groups.member_count, groups.updated_at, groups.created_at') }
@@ -42,6 +43,10 @@ class Group < ActiveRecord::Base
 
   def assert_member_count
     self.member_count = 1
+  end
+
+  def destroy_group_users
+    group_users.destroy_all
   end
   
 end
