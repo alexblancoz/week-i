@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
   end
 
   def assert_identity
-    if self.enrollment.upcase.include?('A')
+    if self.enrollment.upcase =~ /^A*[0-9]/
       self.identity = Identity::USER
     else
       self.identity = Identity::TEACHER
@@ -196,11 +196,11 @@ class User < ActiveRecord::Base
   end
 
   def sanitize_enrollment
-    self.enrollment = self.enrollment.upcase if self.enrollment.upcase.include?('A')
+    self.enrollment = self.enrollment and self.enrollment.upcase =~ /^A*[0-9]/
   end
 
   def validate_enrollment
-    if self.enrollment and self.enrollment.upcase.include?('A')
+    if self.enrollment and self.enrollment.upcase =~ /^A*[0-9]/
       errors.add(:enrollment, I18n.translate('errors.messages.wrong_length', count: 9)) if self.enrollment.size != 9
     end
   end
