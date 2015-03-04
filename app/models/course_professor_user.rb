@@ -20,7 +20,7 @@ class CourseProfessorUser < ActiveRecord::Base
 
   def no_duplicate_course
     course_id = course_professor.course.id
-    if CourseProfessor.filter_by_user(self.user_id).filter_by_course(course_id).first > 0
+    unless CourseProfessor.with_course_professor_users.filter_by_user(self.user_id).filter_by_course(course_id).first.nil?
       errors.add(:course_professor_id, I18n.translate('errors.messages.accepted'))
     end
   end
