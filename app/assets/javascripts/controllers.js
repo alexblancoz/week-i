@@ -666,6 +666,7 @@ angular.module('WeekI.controllers', [])
 
         var initialize = function () {
             $scope.scores = [];
+            $scope.search = {};
 
             if ($scope.user) {
                 loadScores();
@@ -736,6 +737,7 @@ angular.module('WeekI.controllers', [])
 
         var initialize = function () {
             $scope.users = [];
+            $scope.search = {};
             User.list()
                 .success(function (data, status) {
                     $scope.users = data;

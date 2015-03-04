@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
     INT = 1
     LIST = {
         ITC => {
-            name: 'ITC'
+            name: 'ITC / ISC'
         },
         INT => {
             name: 'INT'
