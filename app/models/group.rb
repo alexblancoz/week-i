@@ -46,7 +46,9 @@ class Group < ActiveRecord::Base
   end
 
   def destroy_group_users
-    group_users.destroy_all
+    group_users.each do |group_user|
+        group_user.delete
+    end
   end
-  
+
 end
