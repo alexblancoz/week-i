@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::ApiController
 
   # POST /api/v1/users/login.json
   def login
-    @user = Api::User.authenticate(params[:enrollment], params[:password])
+    @user = Api::User.authenticate(params[:enrollment].upcase, params[:password])
     if @user
       unless @user.verified
         render_error(:unauthorized, "Cuenta no verificada.")

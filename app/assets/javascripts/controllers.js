@@ -455,6 +455,7 @@ angular.module('WeekI.controllers', [])
         var initialize = function () {
             $scope.professors = professors;
             $scope.selected = $scope.professors[0];
+            $scope.search = {};
         };
 
         var handleError = function (data, status) {
@@ -467,6 +468,10 @@ angular.module('WeekI.controllers', [])
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+        };
+
+        $scope.select = function(professor) {
+            $scope.selected = professor;
         };
 
         initialize();
