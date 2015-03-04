@@ -18,7 +18,7 @@ class Api::V1::CoursesController < Api::ApiController
 
   # POST /api/courses/not_taken.json
   def not_taken
-    @courses = paginate(Api::Course.base.with_course_professors.with_professors.with_course_professor_users(@user.id).filter_by_no_user.order(:semester))
+    @courses = paginate(Api::Course.base.with_course_professors.with_professors.with_course_professor_users(@user.id).filter_by_no_user.group_by_user.order(:semester))
     render json: @courses.as_json(Api::Course::Json::LIST)
   end
 
