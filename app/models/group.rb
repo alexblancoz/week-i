@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   has_many :scores
   
   #validations
-  validates :name, length: { in: 2..100 }, presence: true
+  validates :name, length: { in: 2..150 }, presence: true
   validates :owner_id, presence: true
   validate :no_groups, :if => :new_record?
 

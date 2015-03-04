@@ -3,7 +3,7 @@ class Course < ActiveRecord::Base
   has_many :course_professors
 
   #Validations
-  validates :name, length: { in: 2..100 }, presence: true
+  validates :name, length: { in: 2..150 }, presence: true
   validates :key, length: { in: 2..10 }, presence: true
   validates :semester, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }, presence: true
 

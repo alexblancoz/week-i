@@ -5,7 +5,7 @@ class Professor < ActiveRecord::Base
 
   #validations
   validates :name, length: { in: 2..100 }, presence: true
-  validates :last_names, length: { in: 2..100 }, presence: true
+  validates :last_names, length: { in: 2..150 }, presence: true
 
   #selects
   scope :base, ->{ select('professors.id, professors.name, professors.last_names, professors.updated_at, professors.created_at') }

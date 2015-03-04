@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
   has_many :group_users
 
   #validations
-  validates :name, length: {in: 2..100}, presence: true
+  validates :name, length: { in: 2..60 }, presence: true
   validates :last_names, length: {in: 2..100}, presence: true
   validates :major, presence: true
   validates :campus, numericality: {only_integer: true}, inclusion: {in: Campus.keys}, presence: true
