@@ -91,6 +91,7 @@ angular.module('WeekI.controllers', [])
 
         var registerSuccess = function (data, status) {
             Error.customError('Verifica tu email', 'Se te ha enviado un email de verificacion.');
+            $state.go('splash.login');
         };
 
         var handleError = function (data, status) {
