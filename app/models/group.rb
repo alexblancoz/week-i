@@ -26,6 +26,7 @@ class Group < ActiveRecord::Base
   #wheres
   scope :filter_by_id, ->(id){ where('groups.id = ?', id) }
   scope :filter_by_user, ->(user_id){ where('groups.owner_id = ?', user_id) }
+  scope :filter_by_owner, ->(owner_id){ where('groups.owner_id = ?', owner_id) }
 
   #methods
 
@@ -36,7 +37,7 @@ class Group < ActiveRecord::Base
   protected
 
   def no_groups
-    if self.class.base_count.filter_by_user(self.owner_id)[0][:count] > 0
+    if self.class.base_count.filter_by_user(self.owner_id)[0][:count] > 0 && self.class.base_count.filter_by_owner(self.owner_id)[0][:count] > 0
       errors[:name] << 'No puedes tener más de un grupo'
     end
   end
