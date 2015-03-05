@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
   end
 
   def assert_verified
-    self.verified = false
+    self.verified = true
     true
   end
 
@@ -207,8 +207,8 @@ class User < ActiveRecord::Base
 
   def send_verification_email
     unless self.verified
-      mail = UserMailer.validate_user(self)
-      mail.deliver!
+      #mail = UserMailer.validate_user(self)
+      #mail.deliver!
     end
   end
 

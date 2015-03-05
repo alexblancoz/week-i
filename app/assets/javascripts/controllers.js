@@ -90,8 +90,21 @@ angular.module('WeekI.controllers', [])
         };
 
         var registerSuccess = function (data, status) {
-            Error.customError('Verifica tu email', 'Se te ha enviado un email de verificación. Espera algunos minutos.');
-            $state.go('splash.login');
+
+            Session.save(data.token, data.secret, data.user_identity);
+            switch (data.user_identity) {
+                case User.Identities.administrator:
+                case User.Identities.user:
+                    $state.go('dashboard.groups.list');
+                    break;
+                case User.Identities.teacher:
+                    $state.go('dashboard.scores.list');
+                    break;
+                default:
+                    Error.customError('Error', 'No se pudo identitficar tu tipo de usario.');
+                    break;
+            }
+
         };
 
         var handleError = function (data, status) {

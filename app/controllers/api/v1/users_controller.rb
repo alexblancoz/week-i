@@ -42,8 +42,8 @@ class Api::V1::UsersController < Api::ApiController
     @user = Api::User.new(user_params)
     @user.identity = Api::User::Identity::USER
     if @user.save
-      #Api::User.authenticate(@user.enrollment, @user.password)
-      render json: @user.as_json(Api::User::Json::SHOW)
+      Api::User.authenticate(@user.enrollment, @user.password)
+      render json: @user.token.as_json(Api::Token::Json::SHOW)
     else
       render_errors(:unprocessable_entity, @user.errors)
     end
