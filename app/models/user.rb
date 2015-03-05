@@ -183,11 +183,11 @@ class User < ActiveRecord::Base
   end
 
   def assert_identity
-    if self.enrollment.upcase =~ /^A*[0-9]/
+    #if self.enrollment.upcase =~ /^A*[0-9]/
       self.identity = Identity::USER
-    else
-      self.identity = Identity::TEACHER
-    end
+    #else
+      #self.identity = Identity::TEACHER
+    #end
   end
 
   def assert_verified
