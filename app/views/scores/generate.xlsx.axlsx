@@ -1,0 +1,6 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Scores") do |sheet|
+  @scores.each do |score|
+    sheet.add_row [score.innovation_score, score.user_id, score.group_id]
+  end
+end

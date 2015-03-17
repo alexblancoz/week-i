@@ -1,5 +1,7 @@
 class Api::V1::ScoresController < Api::ApiController
 
+  acts_as_xslx
+
   before_action :assert_teacher
 
   # POST /api/scores/scored_groups.json
@@ -21,6 +23,13 @@ class Api::V1::ScoresController < Api::ApiController
       render json: @score.as_json(Api::Score::Json::SHOW)
     else
       render_errors(:unprocessable_entity, @score.errors)
+    end
+  end
+
+  def generate
+    @scores = Score.all
+    respond_to do |format|
+      format.xlsx
     end
   end
 

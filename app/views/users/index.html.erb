@@ -10,12 +10,18 @@
               <th>Nombre del usuario</th>
               <th>Apellido del usuario</th>
               <th>Rol del usuario</th>
+              <th>Campus</th>
+              <th>Matricula</th>
+              <th>Carrera</th>
               <th>Calificaci&oacute;n</th>
             </tr>
             <tr ng-repeat="user in users | filter:search">
               <td>{{user.name}}</td>
               <td>{{user.last_names}}</td>
               <td>{{identities[user.identity]}}</td>
+              <td>{{campuses[user.campus]}}</td>
+              <td>{{user.enrollment}}</td>
+              <td>{{majors[user.major]}}</td>
               <td>{{user.score}}</td>
             </tr>
             </tbody>
