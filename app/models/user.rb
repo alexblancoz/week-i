@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
   has_many :group_users
 
   #validations
-  validates :name, length: { in: 2..60 }, presence: true
+  validates :name, length: {in: 2..60}, presence: true
   validates :last_names, length: {in: 2..100}, presence: true
   validates :major, presence: true
   validates :campus, numericality: {only_integer: true}, inclusion: {in: Campus.keys}, presence: true
@@ -158,12 +158,18 @@ class User < ActiveRecord::Base
   #selects
   scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
-  scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0)))  AS score') }
+  scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0))) / GREATEST(COUNT(scores.id), 1) AS score') }
+  scope :base_professors, ->{ select('professors.id AS professor_id, professors.name AS professor_name, professors.last_names AS professor_last_names') }
+  scope :base_courses, ->{ select('courses.id AS course_id, courses.name AS course_name')}
 
   #joins
   scope :with_group_users, -> { joins('LEFT JOIN group_users ON group_users.user_id = users.id') }
   scope :with_groups, -> { joins('LEFT JOIN groups ON group_users.group_id = groups.id OR groups.owner_id = users.id') }
   scope :with_scores, -> { joins('LEFT JOIN scores ON scores.group_id = groups.id') }
+  scope :with_course_professor_users, -> { joins('INNER JOIN course_professor_users ON course_professor_users.user_id = users.id') }
+  scope :with_course_professors, -> { joins('INNER JOIN course_professors ON course_professor_users.course_professor_id = course_professors.id') }
+  scope :with_professors, -> { joins('INNER JOIN professors ON professors.id = course_professors.professor_id') }
+  scope :with_courses, -> { joins('INNER JOIN courses ON courses.id = course_professors.course_id') }
 
   #wheres
   scope :filter_by_group, ->(group_id) { where('group_users.group_id = ?', group_id) }
@@ -173,6 +179,9 @@ class User < ActiveRecord::Base
 
   #groups
   scope :group_by_score, -> { group('scores.group_id, users.id') }
+
+  #orders
+  scope :order_by_professor, ->{ order('professors.id, courses.id') }
 
   #methods
 
@@ -184,9 +193,9 @@ class User < ActiveRecord::Base
 
   def assert_identity
     #if self.enrollment.upcase =~ /^A*[0-9]/
-      self.identity = Identity::USER
+    self.identity = Identity::USER
     #else
-      #self.identity = Identity::TEACHER
+    #self.identity = Identity::TEACHER
     #end
   end
 

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get 'verify' => 'splash#verify'
 
-  get 'nitza' => 'scores#generate'
+  get 'scores/generate', controller: 'scores', action: 'generate'
 
   resources :courses
 
