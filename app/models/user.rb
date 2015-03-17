@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
   #selects
   scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
-  scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0))) / GREATEST(COUNT(scores.id), 1)  AS score') }
+  scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0)))  AS score') }
 
   #joins
   scope :with_group_users, -> { joins('LEFT JOIN group_users ON group_users.user_id = users.id') }

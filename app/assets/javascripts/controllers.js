@@ -411,8 +411,6 @@ angular.module('WeekI.controllers', [])
             }
         };
 
-
-
         var handleError = function (data, status) {
             Error.handleError(data, status);
         };
