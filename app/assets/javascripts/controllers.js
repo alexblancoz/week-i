@@ -768,6 +768,18 @@ angular.module('WeekI.controllers', [])
                     $scope.identities = data;
                 })
                 .error(handleError);
+
+            User.campuses()
+                .success(function (data, status) {
+                    $scope.campuses = data;
+                })
+                .error(handleError);
+
+            User.majors()
+                .success(function (data, status) {
+                    $scope.majors = data;
+                })
+                .error(handleError);
         };
 
         var handleError = function (data, status) {

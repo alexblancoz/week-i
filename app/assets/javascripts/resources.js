@@ -80,6 +80,15 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     administrator: 0,
                     user: 1,
                     teacher: 2
+                },
+                Campuses: {
+                    CSF: 0,
+                    CEM: 1,
+                    CCM: 2
+                },
+                Majors: {
+                    ITC: 0,
+                    INT: 1
                 }
 
             });

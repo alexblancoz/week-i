@@ -2,7 +2,7 @@ class Api::User < User
 
   module Json
     SHOW = { only: [:id, :name, :last_names, :email, :identity] }
-    LIST = { only: [:id, :name, :last_names, :email, :identity, :score] }
+    LIST = { only: [:id, :name, :last_names, :email, :identity, :score, :enrollment, :campus, :major] }
   end
 
   def token
