@@ -129,7 +129,7 @@ class Api::V1::CoursesController < Api::ApiController
 
   # POST /api/courses/professors.json
   def professors
-    @professors = Api::Professor.base.base_course_professor.with_course_professors.filter_by_course(params[:id])
+    @professors = Api::Professor.base.base_course_professors.with_course_professors.filter_by_course(params[:id])
     render json: @professors.as_json(Api::Professor::Json::COURSE)
   end
 
