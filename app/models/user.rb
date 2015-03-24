@@ -156,11 +156,11 @@ class User < ActiveRecord::Base
   after_save :send_verification_email
 
   #selects
-  scope :base, -> { select('users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
+  scope :base, -> { select('DISTINCT users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
   scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0))) / GREATEST(COUNT(scores.id), 1) AS score') }
-  scope :base_professors, ->{ select('professors.id AS professor_id, professors.name AS professor_name, professors.last_names AS professor_last_names') }
-  scope :base_courses, ->{ select('courses.id AS course_id, courses.name AS course_name')}
+  scope :base_professors, -> { select('professors.id AS professor_id, professors.name AS professor_name, professors.last_names AS professor_last_names') }
+  scope :base_courses, -> { select('courses.id AS course_id, courses.name AS course_name') }
 
   #joins
   scope :with_group_users, -> { joins('LEFT JOIN group_users ON group_users.user_id = users.id') }
@@ -176,12 +176,13 @@ class User < ActiveRecord::Base
   scope :filter_by_status, ->(status) { where('group_users.status = ?', status) }
   scope :filter_by_enrollment, ->(enrollment) { where('users.enrollment = ?', enrollment) }
   scope :filter_by_id, ->(id) { where('users.id = ?', id) }
+  scope :filter_by_identity, ->(identity) { where('users.identity = ?', identity) }
 
   #groups
   scope :group_by_score, -> { group('scores.group_id, users.id') }
 
   #orders
-  scope :order_by_professor, ->{ order('professors.id, courses.id') }
+  scope :order_by_professor, -> { order('professors.id, courses.id') }
 
   #methods
 

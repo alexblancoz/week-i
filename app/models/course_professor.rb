@@ -14,7 +14,6 @@ class CourseProfessor < ActiveRecord::Base
   scope :base, ->{ select('course_professors.id, course_professors.professor_id, course_professors.course_id, course_professors.updated_at, course_professors.created_at') }
 
   #joins
-
   scope :with_course_professor_users, ->{ joins('INNER JOIN course_professor_users ON course_professor_users.course_professor_id = course_professors.id') }
 
   #wheres

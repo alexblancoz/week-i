@@ -1,6 +1,14 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Scores") do |sheet|
-  @users.each do |user|
-    sheet.add_row [user.name, user.last_names, user.campus, user.enrollment, user.major, user.score]
-  end
+last_id = -1
+   @professors.each do |professor|
+        if professor.course_professor_id != last_id
+            last_id = professor.course_professor_id
+            sheet.add_row [professor.name, professor.last_names, professor.course_key, professor.course_name]
+            users = @users.select { |user| user.id == professor.course_professor_user_user_id }
+                users.each do |user|
+                sheet.add_row [user.name, user.last_names, User::Campus::LIST[user.campus][:name], user.enrollment, User::Major::LIST[user.major][:name], user.score]
+            end
+        end
+   end
 end
