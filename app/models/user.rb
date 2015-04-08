@@ -159,6 +159,7 @@ class User < ActiveRecord::Base
   scope :base, -> { select('DISTINCT users.id, users.name, users.last_names, users.enrollment, users.major, users.identity, users.campus, users.active, users.hashed_password, users.verified, users.updated_at, users.created_at') }
   scope :base_group_users, -> { select('group_users.status') }
   scope :base_scores, -> { select('(SUM(coalesce(scores.innovation_score, 0)) + SUM(coalesce(scores.creativity_score, 0)) + SUM(coalesce(scores.functionality_score, 0)) + SUM(coalesce(scores.business_model_score, 0)) + SUM(coalesce(scores.modeling_tools_score, 0))) / GREATEST(COUNT(scores.id), 1) AS score') }
+  scope :base_scores_all, -> { select('(SUM(coalesce(scores.innovation_score, 0)) / GREATEST(COUNT(scores.id), 1)) AS innovation_score, (SUM(coalesce(scores.creativity_score, 0)) / GREATEST(COUNT(scores.id), 1)) AS creativity_score, (SUM(coalesce(scores.functionality_score, 0)) / GREATEST(COUNT(scores.id), 1)) AS functionality_score, (SUM(coalesce(scores.business_model_score, 0)) / GREATEST(COUNT(scores.id), 1)) AS business_model_score, (SUM(coalesce(scores.modeling_tools_score, 0)) / GREATEST(COUNT(scores.id), 1)) AS modeling_tools_score') }
   scope :base_professors, -> { select('professors.id AS professor_id, professors.name AS professor_name, professors.last_names AS professor_last_names') }
   scope :base_courses, -> { select('courses.id AS course_id, courses.name AS course_name') }
 

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   get 'verify' => 'splash#verify'
 
-  get 'scores/generate', controller: 'scores', action: 'generate'
+  get 'scores/generate_groups', controller: 'scores', action: 'generate_groups'
+
+  get 'scores/generate_users', controller: 'scores', action: 'generate_users'
 
   resources :courses
 
