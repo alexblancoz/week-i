@@ -1,5 +1,6 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Users") do |sheet|
+    sheet.add_row ['Nombre', 'Apellidos', 'Campus', 'Mátricula', 'Carrera', 'Calificación (25)', 'Innovación (5)', 'Creatividad (5)', 'Funcionalidad (5)', 'Modelo de negocios (5)', 'Herramientas de negocios (Canvas, etc.) (5)']
     @users.each do |user|
         sheet.add_row [user.name, user.last_names, User::Campus::LIST[user.campus][:name], user.enrollment, User::Major::LIST[user.major][:name], user.score, user.innovation_score, user.creativity_score, user.functionality_score, user.business_model_score, user.modeling_tools_score]
     end
