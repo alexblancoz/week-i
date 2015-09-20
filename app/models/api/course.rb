@@ -2,7 +2,7 @@ class Api::Course < Course
 
   module Json
     LIST = { }
-    SHOW = { }
+    SHOW = { only: [:id, :key, :name, :semester], methods: [:professors] }
   end
 
 end

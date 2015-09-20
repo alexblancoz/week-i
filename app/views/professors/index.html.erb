@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
     <rd-widget>
-      <rd-widget-header icon="fa-tasks" title="Profesores"><a href="#/dashboard/professors/form">Crear</a></rd-widget-header>
+      <rd-widget-header icon="fa-tasks" title="Profesores"><input class="form-control search-control" type="text" ng-model="search.name" placeholder="Nombre del profesor"><a href="#/dashboard/professors/form">Crear</a></rd-widget-header>
       <rd-widget-body classes="no-padding">
         <div class="table-responsive">
           <table class="table table-hover">
@@ -9,10 +9,14 @@
             <tr>
               <th>Nombre del profesor</th>
               <th>Apellido del profesor</th>
+              <th></th>
+              <th></th>
             </tr>
-            <tr ng-repeat="professor in professors" ng-click="show(professor)">
+            <tr ng-repeat="professor in professors | filter:search">
               <td>{{professor.name}}</td>
               <td>{{professor.last_names}}</td>
+              <td><a href="#/dashboard/professors/form?professorId={{professor.id}}">Editar</a></td>
+              <td><a ng-click="destroy(professor)">Borrar</a></td>
             </tr>
             </tbody>
           </table>

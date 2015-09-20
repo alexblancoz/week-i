@@ -59,22 +59,36 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                dashboard: function() {
+                dashboard: function () {
                     return this.post('dashboard.json');
                 },
 
-                majors: function() {
+                identities: function () {
+                    return this.post('identities.json');
+                },
+
+
+                majors: function () {
                     return this.post('majors.json');
                 },
 
-                campuses: function() {
+                campuses: function () {
                     return this.post('campuses.json');
                 },
 
-                identities: {
+                Identities: {
                     administrator: 0,
                     user: 1,
                     teacher: 2
+                },
+                Campuses: {
+                    CSF: 0,
+                    CEM: 1,
+                    CCM: 2
+                },
+                Majors: {
+                    ITC: 0,
+                    INT: 1
                 }
 
             });
@@ -102,15 +116,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 list: function () {
                     return this.post('list.json', {});
                 },
-
-                scored: function () {
-                    return this.post('scored.json', {});
-                },
-
-                nonScored: function () {
-                    return this.post('non_scored.json', {});
-                },
-
+                
                 show: function (groupId) {
                     return this.post('show.json', {
                         data: {
@@ -137,7 +143,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                addMembership: function(groupId) {
+                addMembership: function (groupId) {
                     return this.post('add_membership.json', {
                         data: {
                             id: groupId
@@ -145,11 +151,11 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                destroyMembership: function() {
+                destroyMembership: function () {
                     return this.post('destroy_membership.json', {});
                 },
 
-                acceptMembership: function(userId) {
+                acceptMembership: function (userId) {
                     return this.post('accept_membership.json', {
                         data: {
                             id: userId
@@ -183,6 +189,11 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                 }
             },
             {
+
+                list: function () {
+                    return this.post('list.json', {});
+                },
+
                 taken: function () {
                     return this.post('taken.json', {});
                 },
@@ -191,10 +202,10 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     return this.post('not_taken.json', {});
                 },
 
-                show: function (groupId) {
+                show: function (courseId) {
                     return this.post('show.json', {
                         data: {
-                            id: groupId
+                            id: courseId
                         }
                     });
                 },
@@ -217,23 +228,41 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
-                destroyProfessor: function (courseProfessorUserId) {
+                destroyProfessor: function (professorId, courseId) {
                     return this.post('destroy_professor.json', {
+                        data: {
+                            professor_id: professorId,
+                            course_id: courseId
+                        }
+                    });
+                },
+
+                addProfessor: function (professorId, courseId) {
+                    return this.post('add_professor.json', {
+                        data: {
+                            professor_id: professorId,
+                            course_id: courseId
+                        }
+                    });
+                },
+
+                destroyProfessorUser: function (courseProfessorUserId) {
+                    return this.post('destroy_professor_user.json', {
                         data: {
                             id: courseProfessorUserId
                         }
                     });
                 },
 
-                addProfessor: function(courseProfessorId) {
-                    return this.post('add_professor.json', {
+                addProfessorUser: function (courseProfessorId) {
+                    return this.post('add_professor_user.json', {
                         data: {
                             id: courseProfessorId
                         }
                     });
                 },
 
-                professors: function(courseId) {
+                professors: function (courseId) {
                     return this.post('professors.json', {
                         data: {
                             id: courseId
@@ -246,7 +275,7 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
     }])
 
-.factory('Professor', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
+    .factory('Professor', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
 
         var Professor = ActiveRecord.extend(
             {
@@ -276,10 +305,18 @@ angular.module('WeekI.resources', ['ActiveRecord'])
                     });
                 },
 
+                show: function (professorId) {
+                    return this.post('show.json', {
+                        data: {
+                            id: professorId
+                        }
+                    });
+                },
+
                 destroy: function (courseId) {
                     return this.post('destroy.json', {
                         data: {
-                            id: professorId
+                            id: courseId
                         }
                     });
                 }
@@ -287,4 +324,55 @@ angular.module('WeekI.resources', ['ActiveRecord'])
 
         return Professor;
 
-    }]);
+    }])
+
+    .factory('Score', ['ActiveRecord', 'Configuration', 'Storage', function (ActiveRecord, Configuration, Storage) {
+
+        var Score = ActiveRecord.extend(
+            {
+                $urlRoot: Configuration.apiEndpoint + '/scores',
+
+                $dataWrapper: 'score',
+
+                $headers: function () {
+                    return {
+                        'Auth-Token': Storage.get('token'),
+                        'Auth-Secret': Storage.get('secret')
+                    };
+                }
+            },
+            {
+                list: function () {
+                    return this.post('list.json', {});
+                },
+
+                scoredGroups: function () {
+                    return this.post('scored_groups.json', {});
+                },
+
+                nonScoredGroups: function () {
+                    return this.post('non_scored_groups.json', {});
+                },
+
+                save: function (params) {
+                    var action = 'create.json';
+                    if (params.hasOwnProperty('id') && params.id != null) {
+                        action = 'update.json';
+                    }
+                    return this.post(action, {
+                        data: params
+                    });
+                },
+
+                destroy: function (scoreId) {
+                    return this.post('destroy.json', {
+                        data: {
+                            id: scoreId
+                        }
+                    });
+                }
+            });
+
+        return Score;
+
+    }]);;

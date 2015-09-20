@@ -5,18 +5,18 @@ class Group < ActiveRecord::Base
   has_many :scores
   
   #validations
-  validates :name, length: { in: 2..100 }, presence: true
+  validates :name, length: { in: 2..150 }, presence: true
   validates :owner_id, presence: true
   validate :no_groups, :if => :new_record?
 
   before_save :assert_member_count, :if => :new_record?
+  after_destroy :destroy_group_users
 
   #selects
   scope :base, ->{ select('groups.id, groups.name, groups.owner_id, groups.member_count, groups.updated_at, groups.created_at') }
   scope :base_count, ->{ select('COUNT(groups.id) AS count') }
   scope :base_users, ->{ select('users.name AS user_name, users.last_names AS user_last_names') }
   scope :base_group_users, ->{ select('group_users.status') }
-  scope :base_scores, ->{ select('scores.id, scores.innovation_score AS score_innovation_score, scores.creativity_score AS score_creativity_score, scores.functionality_score AS score_functionality_score, scores.business_model_score AS score_business_model_score, scores.modeling_tools_score AS score_modeling_tools_score') }
 
   #joins
   scope :with_users, ->{ joins('INNER JOIN users ON users.id = groups.owner_id') }
@@ -26,7 +26,7 @@ class Group < ActiveRecord::Base
   #wheres
   scope :filter_by_id, ->(id){ where('groups.id = ?', id) }
   scope :filter_by_user, ->(user_id){ where('groups.owner_id = ?', user_id) }
-  scope :filter_by_no_score, ->{ where('scores.id IS NULL') }
+  scope :filter_by_owner, ->(owner_id){ where('groups.owner_id = ?', owner_id) }
 
   #methods
 
@@ -37,7 +37,7 @@ class Group < ActiveRecord::Base
   protected
 
   def no_groups
-    if self.class.base_count.filter_by_user(self.owner_id)[0][:count] > 0
+    if self.class.base_count.filter_by_user(self.owner_id)[0][:count] > 0 && self.class.base_count.filter_by_owner(self.owner_id)[0][:count] > 0
       errors[:name] << 'No puedes tener más de un grupo'
     end
   end
@@ -45,5 +45,11 @@ class Group < ActiveRecord::Base
   def assert_member_count
     self.member_count = 1
   end
-  
+
+  def destroy_group_users
+    group_users.each do |group_user|
+        group_user.delete
+    end
+  end
+
 end

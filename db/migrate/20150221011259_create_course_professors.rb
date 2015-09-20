@@ -1,8 +1,8 @@
 class CreateCourseProfessors < ActiveRecord::Migration
   def change
     create_table :course_professors do |t|
-      t.integer :professor_id
-      t.integer :course_id
+      t.integer :professor_id, null: false
+      t.integer :course_id, null: false
 
       t.timestamps
     end

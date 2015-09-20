@@ -5,7 +5,7 @@
         Atr&aacute;s
       </a>
 
-      <button class="btn btn-default navbar-btn pull-right" ng-click="requestMembership(group)" ng-if="user.identity == user_identities.user">
+      <button class="btn btn-default navbar-btn pull-right" ng-click="requestMembership(group)" ng-if="user.identity == user_identities.user && group.owner_id != user.id">
         {{request_membership_button}}
       </button>
 

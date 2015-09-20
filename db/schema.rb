@@ -62,8 +62,12 @@ ActiveRecord::Schema.define(version: 20150221224519) do
   end
 
   create_table "scores", force: true do |t|
-    t.float    "amount"
-    t.string   "observations", limit: 512
+    t.integer  "innovation_score"
+    t.integer  "creativity_score"
+    t.integer  "functionality_score"
+    t.integer  "business_model_score"
+    t.integer  "modeling_tools_score"
+    t.string   "observations",         limit: 512
     t.integer  "user_id"
     t.integer  "group_id"
     t.datetime "created_at"
@@ -88,11 +92,12 @@ ActiveRecord::Schema.define(version: 20150221224519) do
     t.string   "hashed_password", limit: 128, null: false
     t.integer  "identity",                    null: false
     t.boolean  "active",                      null: false
+    t.boolean  "verified",                    null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
-  add_foreign_key "course_professor_users", "users", name: "course_professor_users_course_professor_id_fk", column: "course_professor_id"
+  add_foreign_key "course_professor_users", "course_professors", name: "course_professor_users_course_professor_id_fk"
   add_foreign_key "course_professor_users", "users", name: "course_professor_users_user_id_fk"
 
   add_foreign_key "course_professors", "courses", name: "course_professors_course_id_fk"
@@ -100,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150221224519) do
 
   add_foreign_key "groups", "users", name: "groups_owner_id_fk", column: "owner_id"
 
+  add_foreign_key "scores", "groups", name: "scores_group_id_fk"
   add_foreign_key "scores", "users", name: "scores_user_id_fk"
 
 end

@@ -1,0 +1,95 @@
+<div class=row>
+  <div class=col-lg-12>
+    <rd-widget>
+      <rd-widget-header icon="fa-floppy-o" title="Grupos"><a href="#/dashboard/scores/list">Atr&aacute;s</a></rd-widget-header>
+      <form role="form" ng-submit="save(score)">
+        <rd-widget-body classes="no-padding">
+          <div class="panel-body">
+            <div class="form-score">
+              <label>¿Qu&eacute; tan innovadora es la App presentada por el equipo?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.innovation_score" value="1">  No es innovadora. No agrega valor a un posible cliente con respecto a otras soluciones parecidas. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="2">  Es innovadora pero, No es posible crear la innovación propuesta.<br/>
+                <input type="radio" ng-model="score.innovation_score" value="3">  Es innovadora pero no queda claro que tan deseable es para los clientes el valor agregado propuesto. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="4">  La innovación agrega valor para la gente pero su desarrollo no ha sido bien ejecutado. <br/>
+                <input type="radio" ng-model="score.innovation_score" value="5">  La App presentada es innovadora, útil para la gente y ha sido bien realizada. <br/>
+              </div>
+
+              <div class="errors" ng-show="errors.innovation_score">
+                <p class="error" ng-repeat="error in errors.innovation_score">{{error}}</p>
+              </div>
+
+              <label>¿Qu&eacute; tan creativa es la solución propuesta con la App presentada?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.creativity_score" value="1">  No es creativa. No imaginan nada aunque sea un poco diferente a lo ya existente. <br/>
+                <input type="radio" ng-model="score.creativity_score" value="2">  Crean un concepto nuevo pero no pueden explicarlo.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="3">  Crean un concepto nuevo pero no es fácil de entender.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="4">  Crean un concepto nuevo fácil de entender pero se confunde mucho con otras ideas.<br/>
+                <input type="radio" ng-model="score.creativity_score" value="5">  Crean un concepto nuevo completamente diferenciado de otras ideas similares.<br/>
+              </div>
+
+              <div class="errors" ng-show="errors.creativity_score">
+                <p class="error" ng-repeat="error in errors.creativity_score">{{error}}</p>
+              </div>
+
+              <label>¿Es funcional la App desarrollada? </label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.functionality_score" value="1">  No es funcional. Es imposible usar la App.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="2">  Es posible usar la App pero, es muy dificil y nada intuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="3">  Es posible usar la App con algo de esfuerzo pero, no es untuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="4">  Es posible usar la App fácilmente pero, es muy poco intuitiva.<br/>
+                <input type="radio" ng-model="score.functionality_score" value="5">  Es fácil usar la App y es intuitivo para que sirve cada elemento.<br/>
+              </div>
+
+              <div class="errors" ng-show="errors.functionality_score">
+                <p class="error" ng-repeat="error in errors.functionality_score">{{error}}</p>
+              </div>
+
+              <label>¿Se aprecia un modelo de negocios aplicado al desarrollo de la App?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.business_model_score" value="1">  No contempla el modelo de negocios.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="2">  Diseña el negocio, sin considerar beneficios.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="3">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener de manera muy general.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="4">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener, como atraer clientes, definir ofertas de producto e implementar estrategias publicitarias pero no las vincula a la configuración de los recursos de la empresa.<br/>
+                <input type="radio" ng-model="score.business_model_score" value="5">  Diseña el negocio, realizando la planificación de la empresa respecto a los ingresos y beneficios que intenta obtener, como atraer clientes, definir ofertas de producto e implementar estrategias publicitarias vinculadas a la configuración de los recursos de la empresa.<br/>
+              </div>
+
+              <div class="errors" ng-show="errors.business_model_score">
+                <p class="error" ng-repeat="error in errors.business_model_score">{{error}}</p>
+              </div>
+
+              <label>¿La aplicaci&oacute;n desarrollada esta enfocada a resolver un problema en Ciudadan&iacute;a?</label>
+
+              <div class="padding-top-medium padding-bottom-medium">
+                <input type="radio" ng-model="score.modeling_tools_score" value="1">  No tiene un enfoque de Ciudadan&iacute;a.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="2">  Tiene un enfoque de Ciudadan&iacute;a pero no resuelve un problema relacionado.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="3">  Tiene un enfoque de Ciudadan&iacute;a pero no es claro como resuelve un problema relacionado.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="4">  Tiene un enfoque de Ciudadan&iacute;a y resuelve un problema relacionado de manera parcial.<br/>
+                <input type="radio" ng-model="score.modeling_tools_score" value="5">  Tiene un enfoque de Ciudadan&iacute;a y resuelve un problema relacionado.<br/>
+              </div>
+
+              <div class="errors" ng-show="errors.modeling_tools_score">
+                <p class="error" ng-repeat="error in errors.modeling_tools_score">{{error}}</p>
+              </div>
+
+              <div>
+                <input type="text" class="form-control" placeholder="Observaciones" ng-model="score.observations">
+              </div>
+
+              <div class="errors" ng-show="errors.observations">
+                <p class="error" ng-repeat="error in errors.observations">{{error}}</p>
+              </div>
+            </div>
+          </div>
+        </rd-widget-body>
+        <rd-widget-footer>
+          <button type="submit" class="btn btn-default">Guardar</button>
+        </rd-widget-footer>
+      </form>
+    </rd-widget>
+  </div>
+</div>

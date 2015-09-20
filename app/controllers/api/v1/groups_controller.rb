@@ -1,7 +1,8 @@
 class Api::V1::GroupsController < Api::ApiController
 
-  before_action :assert_user
   before_action :assert_group, only: [:update, :destroy, :add_membership]
+  before_action :assert_user
+  before_action :assert_group_owner, only: [:update, :destroy]
 
   # POST /api/groups/list.json
   def list
@@ -30,10 +31,6 @@ class Api::V1::GroupsController < Api::ApiController
   def update
     if @group.nil?
       render_error(:expectation_failed, 'No se encontro el grupo')
-    elsif @group.owner_id != @user.id
-      render_error(:unauthorized, 'Tu cuenta ha sido baneada, contacta a un administrador.')
-      @user.active = false
-      @user.save
     else
       if @group.update(group_params)
         render json: @group.as_json(Api::Group::Json::SHOW)
@@ -78,6 +75,8 @@ class Api::V1::GroupsController < Api::ApiController
   def accept_membership
     @group_user = GroupUser.base.filter_by_user(params[:id]).first
     @group_user.status = GroupUser::Status::MEMBER
+    @group = @group_user.group
+    ban_user and return if @group.owner_id != @user.id
     if @group_user.save
       render json: @group_user
     else
@@ -89,6 +88,10 @@ class Api::V1::GroupsController < Api::ApiController
 
   def assert_group
     @group = Group.filter_by_id(params[:id]).first
+  end
+
+  def assert_group_owner
+    ban_user if @group.owner_id != @user.id
   end
 
   def group_params

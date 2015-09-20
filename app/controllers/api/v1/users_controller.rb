@@ -1,16 +1,32 @@
 class Api::V1::UsersController < Api::ApiController
 
-  before_action :assert_user, except: [:login, :create, :majors, :campuses]
+  before_action :assert_user, except: [:list, :login, :create, :majors, :campuses]
+  before_action :assert_administrator, only: [:list]
+
+  def list
+    @users = User.base.base_scores.with_group_users.with_groups.with_scores.group_by_score
+    render json: @users.as_json(Api::User::Json::LIST)
+  end
 
   # POST /api/v1/users/login.json
   def login
-    @user = Api::User.authenticate(params[:enrollment], params[:password])
+    if params[:enrollment].upcase =~ /^A*[0-9]/
+      enrollment = params[:enrollment].upcase
+    else
+      enrollment = params[:enrollment]
+    end
+    @user = Api::User.authenticate(enrollment, params[:password])
     if @user
-      if @user.active
-        render json: @user.token.as_json(Api::Token::Json::SHOW)
+      unless @user.verified
+        render_error(:unauthorized, "Cuenta no verificada.")
       else
-        render_error(:unauthorized, "Cuenta baneada. Contacta un administrador")
+        if @user.active
+          render json: @user.token.as_json(Api::Token::Json::SHOW)
+        else
+          render_error(:unauthorized, "Cuenta baneada. Contacta un administrador")
+        end
       end
+
     else
       render_error(:unauthorized, "Credenciales incorrectas")
     end
@@ -70,6 +86,11 @@ class Api::V1::UsersController < Api::ApiController
   # POST /api/v1/users/campuses.json
   def campuses
     render json: Api::User::Campus.object_values
+  end
+
+  # POST /api/v1/users/identities.json
+  def identities
+    render json: Api::User::Identity.object_values
   end
 
   protected

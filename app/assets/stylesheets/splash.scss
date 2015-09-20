@@ -1,8 +1,15 @@
 .background {
-  background-image: url(http://habrastorage.org/files/c9c/191/f22/c9c191f226c643eabcce6debfe76049d.jpg);
+  background-image: asset-url('splash/background.jpg');
+  background-size: cover;
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+.splash {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 
   .form-container {
     text-align: center;
@@ -11,19 +18,6 @@
     margin: 4rem auto;
     background-color: #fff;
     padding: 2rem;
-  }
-
-  .login {
-    position: absolute;
-    top: 50%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 500px;
-    transform: translateY(-50%);
-  }
-
-  .register {
   }
 
   .container .glyphicon-image {
@@ -92,5 +86,9 @@
       font-size: 0.7em;
       color: #FFF;
     }
+  }
+
+  .footer {
+    padding-top: 20px;
   }
 }

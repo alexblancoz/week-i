@@ -1,7 +1,6 @@
-
 angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'WeekI.services', 'WeekI.resources', 'WeekI.directives'])
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         $stateProvider
 
@@ -100,11 +99,21 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
             })
 
             .state('dashboard.courses.form', {
-                url: '/form?groupdId',
+                url: '/form?courseId',
                 views: {
                     '': {
                         templateUrl: '/courses/new',
                         controller: 'CoursesFormCtrl'
+                    }
+                }
+            })
+
+            .state('dashboard.courses.show', {
+                url: '/:courseId',
+                views: {
+                    '': {
+                        templateUrl: '/courses/show',
+                        controller: 'CoursesShowCtrl'
                     }
                 }
             })
@@ -137,8 +146,57 @@ angular.module('WeekI', ['ui.router', 'ui.bootstrap', 'WeekI.controllers', 'Week
                         controller: 'ProfessorsFormCtrl'
                     }
                 }
-            });
+            })
 
+            .state('dashboard.users', {
+                abstract: true,
+                url: '/users',
+                views: {
+                    'dashboardContent': {
+                        template: '<ui-view/>'
+                    }
+                }
+            })
+
+            .state('dashboard.users.list', {
+                url: '/list',
+                views: {
+                    '': {
+                        templateUrl: '/users',
+                        controller: 'UsersCtrl'
+                    }
+                }
+            })
+
+            .state('dashboard.scores', {
+                abstract: true,
+                url: '/scores',
+                views: {
+                    'dashboardContent': {
+                        template: '<ui-view/>'
+                    }
+                }
+            })
+
+            .state('dashboard.scores.list', {
+                url: '/list',
+                views: {
+                    '': {
+                        templateUrl: '/scores',
+                        controller: 'ScoresCtrl'
+                    }
+                }
+            })
+
+            .state('dashboard.scores.form', {
+                url: '/form?groupId',
+                views: {
+                    '': {
+                        templateUrl: '/scores/new',
+                        controller: 'ScoresFormCtrl'
+                    }
+                }
+            });
 
 
         $urlRouterProvider.otherwise('/splash/login');

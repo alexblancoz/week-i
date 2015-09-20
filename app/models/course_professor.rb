@@ -13,6 +13,13 @@ class CourseProfessor < ActiveRecord::Base
   #selects
   scope :base, ->{ select('course_professors.id, course_professors.professor_id, course_professors.course_id, course_professors.updated_at, course_professors.created_at') }
 
+  #joins
+  scope :with_course_professor_users, ->{ joins('INNER JOIN course_professor_users ON course_professor_users.course_professor_id = course_professors.id') }
+
   #wheres
   scope :filter_by_id, ->(id){ where('course_professors.id = ?', id) }
+  scope :filter_by_course, ->(course_id){ where('course_professors.course_id = ?', course_id) }
+  scope :filter_by_professor, ->(professor_id){ where('course_professors.professor_id = ?', professor_id) }
+  scope :filter_by_user, ->(user_id){ where('course_professor_users.user_id = ?', user_id) }
+  
 end
